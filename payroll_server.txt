@@ -1,0 +1,4 @@
+
+
+Connection string: 
+Server=tcp:teampayroll.database.windows.net,1433;Initial Catalog=payroll;Persist Security Info=False;User ID=awesome;Password=P@ssw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
