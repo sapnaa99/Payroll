@@ -1,0 +1,285 @@
+﻿
+@{
+    ViewBag.Title = "UserSel";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>User List</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<button type="button" id="btnInternalUser" class="btn btn-info" data-html="add" style="margin-top:10px;">Add</button>
+<div style="margin-top:10px"></div>
+<div id="addInternalUser" class="portlet-body portlet-collapsed" style="display: none;"></div>
+<div id="grid"></div>
+
+
+<script>
+    $(function () {
+
+        //Microsoft Unobtrusive jQuery validation has already binded so must kick off parse to bind partial loaded dynamic form
+        //$.validator.unobtrusive.parse($('userForm'));
+        $("userForm").removeData("validator");
+        $("userForm").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("userForm");
+
+
+        $.ajax({
+            type: 'GET',
+            url: WebApiUri + '/UtilityApi/PlanSel',
+            data: JSON.stringify(),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                var radioHtml = ''
+                for (i = 0; i < response.length; i++) {
+                    radioHtml += ' <input type="radio" name="PlanId" value="' + response[i].PlanId + '"><label class="form-control">' + response[i].Name + ' ( ' + response[i].DurationInMonth + ' month + ' + response[i].CompanyLimit + ' number of Company )</label><br><br>'
+                }
+                $("#planGroup").html(radioHtml)
+
+            },
+            error: function (response) {
+            }
+        });
+
+
+        $("#grid")
+            .kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: WebApiUri + '/UserApi/UserSel',
+                            contentType: 'application/json; charset=utf-8',
+                            type: "GET",
+                            data: { userId : @CurrentUser.UserId},
+                            dataType: 'JSON'
+                        },
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                Email: {
+                                    type: "string",
+                                    editable: false
+                                },
+                                FullName: {
+                                    type: "string",
+                                    editable: false
+                                },
+                                ContactNumber: {
+                                    type: "number",
+                                    editable: false
+                                },
+                                MobileNumber: {
+                                    type: "number",
+                                    editable: false
+                                },
+                                PersonalEmail: {
+                                    type: "string",
+                                    editable: false
+                                },
+                                Gender: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                Address1: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                Address2: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                City: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                State: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                Country: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                UserType: {
+                                    type: "string",
+                                    editable: true
+                                },
+                                RoleName: {
+                                    type: "string",
+                                    editable: true
+                                }
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+
+                scrollable: true,
+                sortable: true,
+                editable: true,
+                selectable: true,
+                filterable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [10, 25, 50, "all"]
+                },
+                dataBound: function () {
+                    record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    for (var i = 0; i < this.columns.length; i++) {
+                        this.autoFitColumn(i);
+                    }
+                },
+                columns: [
+                    {
+                        field: "Email",
+                        title: "Email",
+                        hidden: true
+                    }, {
+                        field: "FullName",
+                        title: "Full Name",
+
+                    }, {
+                        field: "ContactNumber",
+                        title: "Contact Number",
+
+                    }, {
+                        field: "MobileNumber",
+                        title: "Mobile Number"
+                    }, {
+                        field: "PersonalEmail",
+                        title: "Personal Email"
+                    }, {
+                        field: "Gender",
+                        title: "Gender"
+                    }, {
+                        field: "Address1",
+                        title: "Address 1"
+                    }, {
+                        field: "Address2",
+                        title: "Address 2"
+                    }, {
+                        field: "City",
+                        title: "City"
+                    }, {
+                        field: "State",
+                        title: "State"
+                    }, {
+                        field: "Country",
+                        title: "Country"
+                    }, {
+                        field: "UserType",
+                        title: "UserType"
+                    }, {
+                        field: "RoleName",
+                        title: "RoleName"
+                    }
+                ]
+            });
+    });
+
+    $("#btnInternalUser").on("click", function () {
+        debugger
+        $.ajax({
+            url: '/User/AddInternalUser',
+            type: 'GET',
+            success: function (data) {
+
+                var addInternalUser = $("#addInternalUser");
+                addInternalUser.html('');
+                addInternalUser.html(data);
+                reParsePartialView();
+                //$("userForm").removeData($("validator"));
+                //$("userForm").removeData($("unobtrusiveValidation"));
+                //$.validator.unobtrusive.parse($("userForm"));
+                $("#addInternalUser").show();
+            },
+            error: function () {
+                toastr.error("Some error occurred", 'Error');
+            }
+        });
+    });
+
+
+
+
+
+@*Scripts of Partial view - "AddInternalUser"*@
+
+
+    function reParsePartialView() {
+        UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+
+        $("#userForm").on("submit", function (e) {
+            debugger
+            e.preventDefault();
+            $(this).removeData("validator").removeData("unobtrusiveValidation");//remove the form validation
+            $.validator.unobtrusive.parse($(this));//add the form validation
+
+            if ($(this).valid()) {
+
+
+
+            var email = $("#Email").val(),
+                emailConfirmation = $("#EmailConfirmation").val(),
+                Password = $("#Password").val(),
+                PasswordConfirmation = $("#PasswordConfirmation").val()
+
+            if (email != emailConfirmation) {
+                toastr.warning("Email not same", "Warning")
+                return;
+            }
+            if (Password != PasswordConfirmation) {
+                toastr.warning("Password not same", "Warning")
+                return;
+            }
+
+            var userInformationModel = {
+                ContactNumber: parseInt($("#ContactNumber").val()),
+                MobileNumber: parseInt($("#MobileNumber").val()),
+                PersonalEmail: $("#PersonalEmail").val(),
+                GenderListItemId: $("#GenderListItemId").val(),
+                Address1: $("#Address1").val(),
+                Address2: $("#Address2").val(),
+                City: $("#City").val(),
+                State: $("#State").val(),
+                Country: $("#Country").val()
+            }
+                var userModel = {
+                UserId : @CurrentUser.UserId,
+                FName: $("#FName").val(),
+                MName: $("#MName").val(),
+                LName: $("#LName").val(),
+                Email: $("#Email").val(),
+                EmailConfirmation: $("#EmailConfirmation").val(),
+                Password: $("#Password").val(),
+                PasswordConfirmation: $("#PasswordConfirmation").val(),
+                UserInformation: userInformationModel,
+                PlanId: $("input[name='PlanId']:checked").val(),
+                SubDomain: $("#SubDomain").val()
+            }
+
+            $.ajax({
+                type: 'Post',
+                url: WebApiUri + '/UserApi/UserIns',
+                data: JSON.stringify(userModel),
+                dataType: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    toastr.success(response.ReturnMessage, 'Success')
+                    $("#grid")
+                        .data("kendoGrid").dataSource.read();
+                    $("#addInternalUser").hide();
+                },
+                error: function (response) {
+                }
+                });
+            }
+        })
+    }
+
+</script>

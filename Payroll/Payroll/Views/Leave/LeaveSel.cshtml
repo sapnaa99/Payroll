@@ -1,0 +1,310 @@
+﻿
+@model Model.LeaveModel
+@{
+    ViewBag.Title = "LeaveSel";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Leave List</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="portlet-body form ">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-offset-8 col-md-6  col-lg-offset-8  col-lg-12 col-xs-offset-6  col-xs-12 " id="CompanyIdDiv">
+                <div class="form-group">
+                    <label class="control-label">Company Name : </label>
+                    @Html.TextBox("CompanyId")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" id="btnLeaveAdd" class="btn btn-info" data-html="add" style="margin-top:10px;">Add Leave</button>
+<div style="margin-top:10px"></div>
+<div id="addLeaveDiv" class="portlet-body portlet-collapsed" style="display: none;"></div>
+
+<div id="grid"></div>
+<div id="dialog"></div>
+
+    
+<script>
+    var CompanyId;
+    var LeaveIdcheck,
+        LeaveNamecheck,
+        Dayscheck;
+    CompanyId = 0;
+    LeaveIdcheck=0;LeaveNamecheck="";Dayscheck=0;
+
+    $(function () {
+        LoadGrid()
+        UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+        $("#CompanyId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            change: onCompanyChange,
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId},
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+
+    });
+   function LoadGrid() {
+            $("#grid")
+                .kendoGrid({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: WebApiUri + '/LeaveApi/LeaveSel',
+                                contentType: 'application/json; charset=utf-8',
+                                type: "GET",
+                                dataType: 'JSON',
+                                data: {
+                                    CompanyId: CompanyId
+                                }
+                            },
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    LeaveId: {
+                                        type: "int",
+                                        editable: false,
+                                    },
+                                    LeaveName: {
+                                        type: "string",
+                                        editable: true,
+                                    },
+                                    Days: {
+                                        type: "int",
+                                        editable: true
+                                    },
+                                    CompanyId: {
+                                        type: "int",
+                                        editable: false
+                                    },
+                                    InsertDate: {
+                                        type: "datetime",
+                                        editable: false
+                                    }
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+                    scrollable: true,
+                    sortable: true,
+                    editable: true,
+                    selectable: true,
+                    filterable: true,
+                    pageable: {
+                        input: true,
+                        pageSizes: [10, 25, 50, "all"]
+                    },
+                    dataBound: function () {
+                        record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                        for (var i = 0; i < this.columns.length; i++) {
+                            this.autoFitColumn(i);
+                        }
+                    },
+                    columns: [
+                        {
+                            field: "LeaveId",
+                            title: "LeaveId",
+                            hidden: true
+
+                        },
+                         {
+                             field: "CompanyId",
+                             title: "CompanyId",
+                             hidden:true
+                         },
+                         {
+                             field: "LeaveName",
+                             title: "Leave Name"
+                         },
+                         {
+                             field: "Days",
+                             title: "Total Days"
+                         },
+                         {
+                             field: "InsertDate",
+                             title: "Create Date"
+                         },
+                         {
+                             title: "Action",
+                             template: '<button id="btnDel" class="btnDel btn btn-danger">Delete</button>',
+                             width: 100
+                         },
+                    ]
+                });
+    }
+
+   function onCompanyChange() {
+       debugger
+       CompanyId = parseInt($("#CompanyId").val());
+        $('#grid').data().kendoGrid.destroy();
+        $('#grid').empty();
+        LoadGrid();
+    }
+
+   $("#btnLeaveAdd").on("click", function () {
+            debugger
+            BlockInterFace()
+            $.ajax({
+                url: '/Leave/CreateLeave',
+                type: 'GET',
+                success: function (data) {
+                    var addLeaveDiv = $("#addLeaveDiv");
+                    addLeaveDiv.html('');
+                    addLeaveDiv.html(data);
+                    $("#addLeaveDiv").show();
+                    $.unblockUI()
+                },
+                error: function () {
+                    toastr.error("Some error occurred", 'Error');
+                }
+            });
+   });
+
+   function createLeave() {
+       //debugger
+       $.validator.setDefaults({ ignore: '' });
+       $("#leaveForm").validate({
+           wrapper: "div",
+           submitHandler: function (form) {
+               var model = {
+                   LeaveName: $('#LeaveName').val(),
+                   Days: $('#Days').val(),
+                   CompanyId:$('#CompanyId1').val()
+               }
+               $.ajax({
+                   type: 'Post',
+                   url: WebApiUri + '/LeaveApi/LeaveIns',
+                   data: JSON.stringify(model),
+                   dataType: 'JSON',
+                   contentType: "application/json; charset=utf-8",
+                   success: function (response) {
+                       CompanyId=model.CompanyId;
+                       $('#grid').data().kendoGrid.destroy();
+                       $('#grid').empty();
+                       LoadGrid();
+                       $("#addLeaveDiv").hide();
+                       if (response.ReturnMessage == 'Sorry Leave name already exist!') {
+                           toastr.warning(response.ReturnMessage, 'Warning');
+                       }
+                       else if (response.ReturnMessage == 'Leave name cannot be empty') {
+                           toastr.warning(response.ReturnMessage, 'Warning');
+                       }
+                       else if (response.ReturnMessage == 'Leave name cannot be empty') {
+                           toastr.warning(response.ReturnMessage, 'Warning');
+                       }
+                       else if (response.ReturnMessage == 'Sorry Company name dosenot exist!') {
+                           toastr.success(response.ReturnMessage, 'Success');
+                       }
+
+                   },
+                   error: function (response) {
+                   }
+               });
+           }
+       });
+   }
+
+    //delete
+   $("#grid").on("click", "button.btnDel", function (e) {
+       var grid = $("#grid")
+           .data("kendoGrid"),
+           dataItem = grid.dataItem($(e.target).closest("tr"));
+       var modelList = { LeaveId: dataItem.LeaveId,CompanyId:dataItem.CompanyId }    
+       $.ajax({
+           type: 'Post',
+           url: WebApiUri + '/LeaveApi/LeaveDel',
+           data: JSON.stringify(modelList),
+           dataType: 'JSON',
+           contentType: "application/json; charset=utf-8",
+           success: function () {
+               $("#grid").data("kendoGrid").dataSource.read();             
+           },
+           error: function (response) {
+               alert('Error Occured!')
+           }
+       });
+
+   });    //Grid Update
+   $("#grid").on("change", function (e) {
+       debugger
+       BlockInterFace()
+       var grid =  $("#grid").data("kendoGrid"), dataItem = grid.dataItem($(e.target).closest("tr"));
+       LeaveIdcheck = dataItem.LeaveId;
+       LeaveNamecheck = dataItem.LeaveName;
+       Dayscheck = dataItem.Days;
+       CompanyId=dataItem.CompanyId;
+
+       var dialog = $("#dialog");
+       dialog.kendoDialog({
+           width: "400px",
+           title: "SAVE",
+           closable: true,
+           modal: true,
+           content: "Save Changes?",
+           actions: [{
+               text: 'Close',
+               action: onCancel
+           }
+               , {
+                   text: 'Ok',
+                   primary: true,
+                   action: UpdateSubmit
+               }
+           ]
+       })
+       dialog.data("kendoDialog")
+           .open();
+   })
+
+
+   function UpdateSubmit() {
+       debugger
+       var model = {
+           LeaveId : LeaveIdcheck,
+           LeaveName : LeaveNamecheck,
+           Days : Dayscheck,
+           CompanyId:CompanyId
+       };
+           $.ajax({
+               type: 'Post',
+               url: WebApiUri + '/LeaveApi/LeaveUpdate',
+               data: JSON.stringify(model),
+               dataType: 'JSON',
+               contentType: "application/json; charset=utf-8",
+               success: function (response) {
+                   $("#grid").data("kendoGrid").dataSource.read();
+                   $.unblockUI();
+               },
+               error: function (response) { }
+           });
+   }
+
+
+   function onCancel() {
+           $("#grid").data("kendoGrid").dataSource.read();
+           $.unblockUI();
+       }
+
+</script>

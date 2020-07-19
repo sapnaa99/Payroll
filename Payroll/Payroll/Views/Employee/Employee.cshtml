@@ -1,0 +1,287 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+}
+
+    @*<div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">
+                <h2>Employee</h2>
+                <hr />
+            </div>
+        </div>
+    </div>*@
+<button type="button" id="btnEmployeeAdd" class="btn btn-info" data-html="add" style="margin-top:10px;">Add</button>
+<div style="margin-top:10px"></div>
+<div id="addEmployeeDiv" class="portlet-body portlet-collapsed" style="display: none;"></div>
+<div id="grid" style="margin-top:10px;margin-bottom: 10px"></div>
+<div id="dialog"></div>
+
+<script>
+    $(function() {
+        $("#grid")
+            .kendoGrid({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: WebApiUri + '/EmployeeApi/EmployeeSel',
+                                contentType: 'application/json; charset=utf-8',
+                                type: "GET",
+                                data: { clientId: @CurrentUser.ClientId},
+                                dataType: 'JSON'
+                            },
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    EmployeeId: {
+                                        type: "number",
+                                        editable: false
+                                    },
+                                    Email: {
+                                        type: "string",
+                                        editable: true
+                                    },
+                                    FullName: {
+                                        type: "string",
+                                        editable: true
+                                    },
+                                    IsActive: {
+                                        type: "boolean",
+                                        editable: true
+                                    },
+                                    CompanyName: {
+                                        type: "string",
+                                        editable: true
+                                    },
+                                    ContactNumber: {
+                                        type: "number",
+                                        editable: true
+                                    },
+                                    MobileNumber: {
+                                        type: "number",
+                                        editable: false
+                                    },
+                                    PersonalEmail: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Gender: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Address1: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Address2: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    City: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    State: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Country: {
+                                        type: "string",
+                                        editable: false
+                                    }
+
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+
+                    scrollable: true,
+                    sortable: true,
+                    editable: true,
+                    selectable: true,
+                    filterable: true,
+                    pageable: {
+                        input: true,
+                        pageSizes: [10, 25, 50, "all"]
+                    },
+                    dataBound: function() {
+                        record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                        for (var i = 0; i < this.columns.length; i++) {
+                            this.autoFitColumn(i);
+                        }
+                    },
+                    columns: [
+                        {
+                            field: "EmployeeId",
+                            title: "EmployeeId",
+                            hidden: true
+                        }, {
+                            field: "Email",
+                            title: "Email",
+                            hidden: true
+
+                        }, {
+                            field: "FullName",
+                            title: "Full Name"
+
+                        }, {
+                            field: "IsActive",
+                            title: "Active"
+
+                        }, {
+                            field: "CompanyName",
+                            title: "Company Name"
+                        }, {
+                            field: "ContactNumber",
+                            title: "Contact Number"
+                        }, {
+                            field: "MobileNumber",
+                            title: "Mobile Number"
+                        }, {
+                            field: "PersonalEmail",
+                            title: "Personal Email"
+                        }, {
+                            field: "Gender",
+                            title: "Gender"
+                        }, {
+                            field: "Address1",
+                            title: "Address1"
+                        }, {
+                            field: "Address2",
+                            title: "Address2"
+                        }, {
+                            field: "City",
+                            title: "City"
+                        }, {
+                            field: "State",
+                            title: "State"
+                        }, {
+                            field: "Country",
+                            title: "Country"
+                        }
+                    ]
+                }
+            );
+    });
+    $("#btnEmployeeAdd").on("click",
+        function() {
+            debugger
+            $.ajax({
+                url: '/Employee/CreateEmployee',
+                type: 'GET',
+                success: function(data) {
+                    var addEmployeeDiv = $("#addEmployeeDiv");
+                    addEmployeeDiv.html('');
+                    addEmployeeDiv.html(data);
+                    $("#btnEmployeeAdd").hide();
+                    $("#addEmployeeDiv").show();
+                    loadPartialViewScript()
+                },
+                error: function() {
+                    toastr.error("Some error occurred", 'Error');
+                }
+            });
+        });
+
+
+
+  
+
+
+    function loadPartialViewScript() {
+
+        $(function () {
+        UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+        $("#CompanyId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId},
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+
+    });
+
+
+    $("#employeeForm").on("submit",
+        function(e) {
+            debugger
+            e.preventDefault();
+            $(this).removeData("validator").removeData("unobtrusiveValidation"); //remove the form validation
+            $.validator.unobtrusive.parse($(this)); //add the form validation
+
+            if ($(this).valid()) {
+                debugger
+
+                var EmployeeSalaryModel = {
+                    BasicSalary: $('#BasicSalary').val(),
+                    Allowance: $('#Allowance').val()
+
+                }
+
+                var EmployeeInformationModel = {
+                    ContactNumber: $('#ContactNumber').val(),
+                    MobileNumber: $('#MobileNumber').val(),
+                    PersonalEmail: $('#PersonalEmail').val(),
+                    GenderListItemId: $('#GenderListItemId').val(),
+                    Address1: $('#Address1').val(),
+                    Address2: $('#Address2').val(),
+                    City: $('#City').val(),
+                    State: $('#State').val(),
+                    Country: $('#Country').val(),
+                    InsertUserId : @CurrentUser.UserId
+                }
+                var model = {
+                    FName: $('#FName').val(),
+                    MName: $('#MName').val(),
+                    LName: $('#LName').val(),
+                    Password: $('#Password').val(),
+                    CompanyId: $('#CompanyId').val(),
+                    Email: $("#Email").val(),
+                    EmployeeSalary: EmployeeSalaryModel,
+                    EmployeeInformation: EmployeeInformationModel
+
+                }
+
+                $.ajax({
+                    type: 'Post',
+                    url: WebApiUri + '/EmployeeApi/EmployeeIns',
+                    data: JSON.stringify(model),
+                    dataType: 'JSON',
+                    contentType: "application/json; charset=utf-8",
+                    success: function(response) {
+                        debugger
+                        if (response.ReturnMessage == 'Password does not match') {
+                            toastr.warning(response.ReturnMessage, 'Warning')
+                        } else {
+                            toastr.success(response.ReturnMessage, 'Success')
+                        }
+                        $("#grid").data("kendoGrid").dataSource.read();
+                        $("#addEmployeeDiv").hide()
+                        $("#btnEmployeeAdd").show();
+                    },
+                    error: function(response) {
+                    }
+                });
+            }
+        });
+
+        $("#btnCancel").on("click", function () {
+            $("#addEmployeeDiv").hide()
+            $("#btnEmployeeAdd").show();
+        })
+    }
+
+</script>

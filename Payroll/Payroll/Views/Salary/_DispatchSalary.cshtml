@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Dispatch Salary";
+}
+@model Model.SalaryTransactionModel
+
+<div class="portlet box blue">
+
+    <form id="salaryRateForm" class="horizontal-form">
+        <div class="portlet-body form ">
+
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Salary Payment Type</label>
+                            @Html.TextBoxFor(x => x.SalaryPaymentTypeListItemId, null, new { @class = "form-control ", id = "SalaryPaymentTypeListItemId" })
+                            @Html.ValidationMessageFor(x => x.SalaryPaymentTypeListItemId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Last Paid Date</label>
+                            @Html.TextBoxFor(x => x.LastPaidDate, null, new { @class = "form-control ", id = "LastPaidDate" })
+                            @Html.ValidationMessageFor(x => x.LastPaidDate, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Payment Method</label>
+                            @Html.TextBoxFor(x => x.PaymentMethodListItemId, null, new { @class = "form-control ", id = "PaymentMethodListItemId" })
+                            @Html.ValidationMessageFor(x => x.PaymentMethodListItemId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Salary Amount</label>
+                            @Html.TextBoxFor(x => x.SalaryAmount, null, new { @class = "form-control ", id = "SalaryAmount" })
+                            @Html.ValidationMessageFor(x => x.SalaryAmount, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Employee Provident Fund Rate</label>
+                            @Html.TextBoxFor(x => x.EmployeeProvidentFundRate, null, new { @class = "form-control ", id = "EmployeeProvidentFundRate" })
+                            @Html.ValidationMessageFor(x => x.EmployeeProvidentFundRate, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Employee Provident Fund Amount</label>
+                        @Html.TextBoxFor(x => x.EmployeeProvidentFundAmount, null, new { @class = "form-control ", id = "EmployeeProvidentFundAmount" })
+                        @Html.ValidationMessageFor(x => x.EmployeeProvidentFundAmount, null, new { @class = "label label-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Company Provident Fund Rate</label>
+                            @Html.TextBoxFor(x => x.CompanyProvidentFundRate, null, new { @class = "form-control ", id = "CompanyProvidentFundRate" })
+                            @Html.ValidationMessageFor(x => x.CompanyProvidentFundRate, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Company Provident Fund Amount</label>
+                            @Html.TextBoxFor(x => x.CompanyProvidentFundAmount, null, new { @class = "form-control ", id = "CompanyProvidentFundAmount" })
+                            @Html.ValidationMessageFor(x => x.CompanyProvidentFundAmount, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Tax Amount</label>
+                        @Html.TextBoxFor(x => x.TaxAmount, null, new { @class = "form-control ", id = "TaxAmount" })
+                        @Html.ValidationMessageFor(x => x.TaxAmount, null, new { @class = "label label-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Misc Amount</label>
+                            @Html.TextBoxFor(x => x.MiscAmount, null, new { @class = "form-control ", id = "MiscAmount" })
+                            @Html.ValidationMessageFor(x => x.MiscAmount, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Salary Status</label>
+                            @Html.TextBoxFor(x => x.SalaryStatusListItemId, null, new { @class = "form-control ", id = "SalaryStatusListItemId" })
+                            @Html.ValidationMessageFor(x => x.SalaryStatusListItemId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="form-actions right">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" class="btn btn-Danger" id="btnCancel">Cancel</button>
+        </div>
+    </form>
+</div>

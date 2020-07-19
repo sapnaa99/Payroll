@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Employee Salary";
+}
+
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>-------------------</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<div style="margin-top:10px"></div>
+<div class="portlet-body form ">
+    <div class="form-body">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Company</label>
+                    @Html.TextBox("CompanyId", null, new { @class = "form-control ", id = "CompanyId" })
+                    @Html.ValidationMessage("CompanyId", null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="addEmployeeSalaryDiv" class="portlet-body portlet-collapsed" style="display: none;"></div>
+<div id="grid" style="margin-top:10px"></div>
+<div id="dialog"></div>
+
+<script>
+    var record =0
+    $(function() {
+
+        $("#CompanyId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            change: onCompanyChange,
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId },
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+    });
+
+    function onCompanyChange() {
+        if ($('#grid').data("kendoGrid")) {
+            $('#grid').data().kendoGrid.destroy();
+            $('#grid').empty();
+        }
+        $("#grid")
+            .kendoGrid({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: WebApiUri + '/SalaryApi/EmployeeSalartTransactionSel',
+                                contentType: 'application/json; charset=utf-8',
+                                type: "GET",
+                                data: { companyId: $("#CompanyId").val() },
+                                dataType: 'JSON'
+                            },
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    EmployeeId: {
+                                        type: "number"
+                                    },
+                                    Name: {
+                                        type: "string"
+                                    },
+                                    BasicSalary: {
+                                        type: "number"
+                                    },
+                                    Allowance: {
+                                        type: "number"
+                                    },
+                                    LastPaidDate: {
+                                        type: "date"
+                                    },
+                                    DayDiff: {
+                                        type : "number"
+                                    }
+
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+                    scrollable: true,
+                    sortable: true,
+                    selectable: true,
+                    filterable: true,
+                    pageable: {
+                        input: true,
+                        pageSizes: [10, 25, 50, "all"]
+                    },
+                    dataBound: function() {
+                        record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    },
+                    columns: [
+                        {
+                            title: "Action",
+                            template: '#= actionTemplate(DayDiff)#',
+                            width: 100
+                        }, {
+                            field: "Sn",
+                            template: "#= ++record #"
+                        },
+                        {
+                            field: "Name",
+                            title: "Name"
+                        }, {
+                            field: "BasicSalary",
+                            title: "Basic Salary"
+
+                        }, {
+                            field: "Allowance",
+                            title: "Allowance"
+
+                        }, {
+                            field: "LastPaidDate",
+                            title: "Last Paid Date",
+                            format: "{0:MMM dd, yyyy}"
+                        }
+                    ]
+                }
+            );
+    }
+
+    function actionTemplate(DayDiff) {
+        if (DayDiff > 1 || DayDiff == null)
+            return '<button id="btnSettleSalary" class="btnSettleSalary btn btn-default">Pay</button>'
+        else
+            return '<button id="btnPaidSalary" class="btn btn-success">Paid</button>'
+    }
+
+
+    function loadPartialViewScript() {
+
+    }
+
+    $("#grid")
+        .on("click", "button.btnSettleSalary", function (e) {
+            debugger 
+            var grid = $("#grid")
+                    .data("kendoGrid"),
+                dataItem = grid.dataItem($(e.target)
+                    .closest("tr"));
+            var EmployeeId = dataItem.EmployeeId;
+
+
+            $.ajax({
+                url: '/Salary/DispatchSalary',
+                type: 'GET',
+                success: function(data) {
+                    var addEmployeeSalaryDiv = $("#addEmployeeSalaryDiv");
+                    addEmployeeSalaryDiv.html('');
+                    addEmployeeSalaryDiv.html(data);
+                    $("#addEmployeeSalaryDiv").show();
+                    loadPartialViewScript()
+                },
+                error: function() {
+                    toastr.error("Some error occurred", 'Error');
+                }
+            });
+     
+        });         
+
+</script>

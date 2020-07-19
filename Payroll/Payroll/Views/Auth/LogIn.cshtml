@@ -1,0 +1,116 @@
+﻿@model Model.LogInModel
+@*   @{
+        ViewBag.Title = "Log In";
+        Layout = null;
+    }
+
+    <h2>Log In</h2>
+
+    @Html.ValidationSummary(true)
+
+    @using (Html.BeginForm())
+    {
+        @Html.EditorForModel()
+        <p>
+            <button type="submit">Log In</button>
+        </p>
+    }*@
+
+
+
+
+@{
+    Layout = null;
+}
+<title>Session Login - IRAS</title>
+<style>
+    .text {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%,-50%);
+        color: #fff;
+        max-width: 90%;
+        padding: 2em 3em;
+        background: rgba(0, 0, 0, 0.4);
+        text-shadow: 0px 0px 2px #131415;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    h1 {
+        font-size: 2.25em;
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+</style>
+
+<link rel="SHORTCUT ICON" href="~/Content/Logo/favicon.ico" />
+<link href="~/Content/ParticleStyle/css/style.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<div id="particles-js"></div>
+<script src="~/scripts/ParticleJs/particles.js"></script>
+<script src="~/scripts/ParticleJs/js/app.js"></script>
+<script src="~/scripts/ParticleJs/js/lib/stats.js"></script>
+
+
+@using (Html.BeginForm("Login", "Auth", null, FormMethod.Post, new { @class = "login active" }))
+{
+    @*<div class="portlet box blue text">
+        <div class="portlet-title" style="text-align: center">
+            <div class="caption">
+                <img src="~/Content/Logo/Logo.png" />
+                <h1>Report Generator</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="portlet-body form" style="text-align: center">
+          
+                @Html.EditorForModel()
+                <p>
+                    <button type="submit">Log In</button>
+                </p>
+          
+
+        </div>
+    </div>*@
+<div class="portlet box blue text">
+    <div class="portlet-title" style="text-align: center">
+        <div class="caption">
+            <img src="~/Content/Logo/Logo.png" />
+            <h1>Report Generator</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="portlet-body form" style="text-align: center">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <h6>@Html.LabelFor(x => x.Email)</h6>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @style = "display: inline;text-align: center", @placeholder = "User Name" })
+                        @Html.ValidationMessage("Email")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h6>  @Html.LabelFor(x => x.Password)</h6>
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", @style = "display: inline;text-align: center", @placeholder = "Password" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-actions right">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <span class="glyphicon glyphicon-user" id="startsession"></span>   Login
+            </button>
+        </div>
+    </div>
+</div>
+}
+

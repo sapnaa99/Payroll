@@ -1,0 +1,337 @@
+﻿@model Model.EmployeeLeaveModel
+
+@{
+    ViewBag.Title = "EmployeeLeaveCreate";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-body form ">
+        <form id="employeeleaveForm" class="horizontal-form">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="StartDate">Start Date</label>
+                            @Html.TextBox("StartDate", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="EndDate">End Date</label>
+                            @Html.TextBox("EndDate", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="LeaveId">Leave Type</label><br />
+                            @Html.TextBox("LeaveId", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Description">Description</label><br />
+                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @id = "Description", @rows = "3", @COLS = "100" })
+                            @Html.ValidationMessageFor(x => x.Description, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i> Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Leave List</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div id="grid"></div>
+<div id="dialog"></div>
+
+
+<script>
+  $(function () {
+      $("#LeaveId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "LeaveName",
+            dataValueField: "LeaveId",
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/LeaveApi/LeaveSel',
+                        data: { CompanyId: 2 },
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                        }
+                        }
+                        }
+                        }).data("kendoDropDownList");
+
+  });
+
+  $(document).ready(function () {
+      $("#StartDate").kendoDateTimePicker({
+          value: new Date(),
+          dateInput: true,
+          format: "{0:MM/dd/yyyy}"
+      });
+      $("#EndDate").kendoDateTimePicker({
+          value: new Date(),
+          dateInput: true,
+          format: "{0:MM/dd/yyyy}"
+      });
+  });
+
+  $("#employeeleaveForm").on("submit", function (e) {
+           debugger
+           e.preventDefault();
+
+           $(this).removeData("validator").removeData("unobtrusiveValidation"); //remove the form validation
+           $.validator.unobtrusive.parse($(this)); //add the form validation
+
+           if ($(this).valid()) {
+               debugger
+               var model = {
+                   StartDate: $('#StartDate').val().toLocaleString(),
+                   EndDate: $('#EndDate').val().toLocaleString(),
+                   LeaveId: $('#LeaveId').val(),
+                   Remarks: $('#Remarks').val(),
+                   Description: $('#Description').val(),
+                   EmployeeId: 18
+               }
+               $.ajax({
+                   type: 'Post',
+                   url: WebApiUri + '/LeaveApi/EmployeeLeaveAppliedIns',
+                   data: JSON.stringify(model),
+                   dataType: 'JSON',
+                   contentType: "application/json; charset=utf-8",
+                   success: function (response) {
+                       toastr.success("Added Successfully", 'success')
+                       $("#grid").data("kendoGrid").dataSource.read();
+
+                   },
+                   error: function (response) {
+                   }
+               });
+
+           }
+       })
+
+  $(function () {
+      $("#grid")
+          .kendoGrid({
+              dataSource: {
+                  transport: {
+                      read: {
+                          url: WebApiUri + '/LeaveApi/EmployeeLeaveAppliedSel',
+                          contentType: 'application/json; charset=utf-8',
+                          type: "GET",
+                          dataType: 'JSON',
+                          data: {
+                              EmployeeId: 18
+                          }
+                      },
+                  },
+                  schema: {
+                      model: {
+                          fields: {
+                              EmployeeLeaveId: {
+                                  type: "int",
+                                  editable: false,
+                              },
+                              EmployeeName: {
+                                  type: "int",
+                                  editable: false,
+                              },
+                              AppliedDate: {
+                                  type: "date",
+                                  editable: false,
+                              },
+                              StartDate: {
+                                  type: "date",
+                                  editable: true
+                              },
+                              EndDate: {
+                                  type: "date",
+                                  editable: true
+                              },
+                              Description: {
+                                  type: "string",
+                                  editable: true
+                              },
+                              ListItemName: {
+                                  type: "string",
+                                  editable: false
+                              }
+                          }
+                      }
+                  },
+                  pageSize: 20,
+              },
+              dataBound: function () {
+                  record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                  for (var i = 0; i < this.columns.length; i++) {
+                      this.autoFitColumn(i);
+                  }
+              },
+              scrollable: true,
+              editable: true,
+              sortable: true,
+              selectable: true,
+              filterable: true,
+              pageable: {
+                  input: true,
+                  pageSizes: [10, 25, 50, "all"]
+              },
+              columns: [
+                      {
+                          field: "EmployeeLeaveId",
+                          title: "EmployeeLeaveId",
+                          hidden: true
+                      },
+                      {
+                           field: "EmployeeId",
+                           title: "EmployeeId",
+                           hidden: true
+                      },
+                      {
+                          field: "LeaveId",
+                          title: "LeaveId",
+                          hidden: true
+                      },
+                         {
+                             field: "LeaveStatusListItemId",
+                             title: "LeaveStatusListItemId",
+                             hidden: true
+                         },
+                         {
+                           field: "ApprovedUserId",
+                           title: "ApprovedUserId",
+                           hidden: true
+                         },
+                         {
+                          field: "InsertDate",
+                          title: "InsertDate",
+                          hidden: true
+                         },
+                          {
+                              field: "Remarks",
+                              title: "Remarks",
+                              hidden: true
+                          },
+                         {
+                           field: "EmployeeName",
+                           title: "Employee Name"
+                         },
+                           {
+                               field: "AppliedDate",
+                               title: "Applied Date",
+                               format: "{0:MM/dd/yyyy}"
+                           },
+                           {
+                               field: "StartDate",
+                               title: "Start Date",
+                               //editor: dateTimeEditor,
+                               format: "{0:MM/dd/yyyy}"
+                           },
+                           {
+                               field: "EndDate",
+                               title: "End Date",
+                               //editor: dateTimeEditor,
+                               format: "{0:MM/dd/yyyy}"
+                           },
+                           {
+                               field: "Description",
+                               title: "Description"
+                           },
+                           {
+                               field: "ListItemName",
+                               title: "Status"
+                           },
+                              {
+                                  field: "LeaveId",
+                                  title: "Action",
+                                  template: '<button class="btn btn-info" onclick="GetLeaveId(event)">Update</button>'
+                              },
+              ]
+          });
+  });
+
+  //Grid Update
+  //$("#grid").on("change", function (e) {
+  //    debugger
+  //    //var data = getModel();
+  //        var grid = $("#grid")
+  //                 .data("kendoGrid"),
+  //             dataItem = grid.dataItem($(e.target)
+  //                 .closest("tr"));
+  //    $.ajax({
+  //        type: 'Post',
+  //        url: WebApiUri + '/LeaveApi/EmployeeLeaveAppliedUpdate',
+  //        data: JSON.stringify(dataItem),
+  //        dataType: 'JSON',
+  //        contentType: "application/json; charset=utf-8",
+  //        success: function (response) {
+  //            toastr.success("Updated Successfully", 'success')
+  //            $("#grid").data("kendoGrid").dataSource.read();
+
+  //        },
+  //        error: function (response) { }
+  //    });
+  //})
+  function GetLeaveId(event)
+  {
+      debugger
+      var grid = $("#grid").data("kendoGrid"),
+      dataItem = grid.dataItem($(event.target).closest("tr"));
+
+      $.ajax({
+          url: WebApiUri + '/LeaveApi/EmployeeLeaveAppliedUpdateNew',
+          type: 'Post',
+          data: JSON.stringify(dataItem),
+          dataType: 'JSON',
+          contentType: "application/json; charset=utf-8",
+          success: function (response) {
+              toastr.success("Updated Successfully", 'success')
+              $("#grid").data("kendoGrid").dataSource.read();
+
+          },
+          error: function (response) {
+              toastr.error("Something went wrong!", 'error')
+          }
+      }).done(function (result) {
+          return result;
+      })
+  }
+
+
+
+  function getModel() {
+      var dataSource = $("#grid")
+          .data("kendoGrid")
+          .dataSource;
+      var filters = dataSource.filter();
+      var allData = dataSource.data();
+      var query = new kendo.data.Query(allData);
+      var data = query.filter(filters)
+          .data;
+      return data;
+  }
+</script>

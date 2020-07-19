@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Company";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Company</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<button type="button" id="btnCompanyAdd" class="btn btn-info" data-html="add" style="margin-top:10px;">Add</button>
+<div style="margin-top:10px"></div>
+<div id="addCompanyDiv" class="portlet-body portlet-collapsed" style="display: none;"></div>
+<div id="grid" style="margin-top:10px"></div>
+
+<div id="dialog"></div>
+<script>
+    var CompanyId ,
+    CompanyName,
+    UserId
+    $(function () {
+        $("#grid")
+            .kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: WebApiUri + '/UtilityApi/CompanySel',
+                            contentType: 'application/json; charset=utf-8',
+                            type: "GET",
+                            data: {UserId : @CurrentUser.UserId},
+                            dataType: 'JSON'
+                        },
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                CompanyId: {
+                                    type: "number",
+                                    editable: false
+                                },
+                                CompanyName: {
+                                    type: "string",
+                                    editable: true
+                                }, CreatedBy: {
+                                    type: "string",
+                                    editable: false
+                                },
+                                CreatedDate: {
+                                    type: "date",
+                                    editable: false
+                                }
+
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+
+                scrollable: true,
+                sortable: true,
+                editable: true,
+                selectable: true,
+                filterable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [10, 25, 50, "all"]
+                },
+                dataBound: function () {
+                    record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    //for (var i = 0; i < this.columns.length; i++) {
+                    //    this.autoFitColumn(i);
+                    //}
+                },
+                columns: [
+                    {
+                        field: "CompanyId",
+                        title: "CompanyId",
+                        hidden: true
+                    }, {
+                        field: "CompanyName",
+                        title: "Company Name"
+
+                    }, {
+                        field: "CreatedBy",
+                        title: "Created By"
+
+                    }, {
+                        field: "CreatedDate",
+                        title: "Created Date", format: "{0:MM/dd/yyyy}"
+
+                    }
+                ]
+            });
+    });
+    $("#btnCompanyAdd").on("click", function () {
+        debugger
+        BlockInterFace()
+        $.ajax({
+            url: '/Company/CreateCompany',
+            type: 'GET',
+            success: function (data) {
+                var addCompanyDiv = $("#addCompanyDiv");
+                addCompanyDiv.html('');
+                addCompanyDiv.html(data);
+                $("#addCompanyDiv").show();
+                $.unblockUI()
+            },
+            error: function () {
+                toastr.error("Some error occurred", 'Error');
+            }
+        });
+    });
+
+    $("#grid").on("change", function (e) {
+        debugger
+        BlockInterFace()
+        var grid = $("#grid")
+                .data("kendoGrid"),
+            dataItem = grid.dataItem($(e.target)
+                .closest("tr"));
+
+        CompanyId = dataItem.CompanyId;
+        CompanyName = dataItem.CompanyName;
+        UserId = @CurrentUser.UserId;
+        var dialog = $("#dialog");
+        dialog.kendoDialog({
+            width: "400px",
+            title: "SAVE",
+            closable: true,
+            modal: true,
+            content: "Save Changes?",
+            actions: [{
+                    text: 'Close',
+                    action: onCancel
+                }
+                , {
+                    text: 'Ok',
+                    primary: true,
+                    action: onOK
+                }
+            ]
+        })
+        dialog.data("kendoDialog")
+            .open();
+    })
+
+
+    function onOK() {
+        debugger
+        var model = {
+            CompanyId : CompanyId,
+            CompanyName : CompanyName,
+            UserId : UserId
+        };
+        
+        $.ajax({
+            type: 'Post',
+            url: WebApiUri + '/UtilityApi/CompanyIns',
+            data: JSON.stringify(model),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.ReturnMessage == 'Name cannot be empty') {
+                    toastr.warning(response.ReturnMessage, 'Warning')
+                } else {
+                    toastr.success(response.ReturnMessage, 'Success')
+                }
+                
+                $("#grid")
+                    .data("kendoGrid").dataSource.read();
+                $.unblockUI();
+            },
+            error: function (response) { }
+        });
+    }
+
+    function onCancel() {
+        $("#grid")
+            .data("kendoGrid").dataSource.read();
+        $.unblockUI();
+    }
+
+</script>

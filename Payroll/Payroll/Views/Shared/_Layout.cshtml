@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @*needs to be Bundled and minified*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-glyphicons.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.default.mobile.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.common.min.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/Toastr/toastr.css" rel="stylesheet" />
+
+
+    @*Scirpts sections is loaded at first since kendo and jqeury is not recognized while app is running*@
+    @*Needs to be bundled and minified as well*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.unobtrusive.js"></script>
+    <script src="~/scripts/Kendo/jszip.min.js"></script>
+    <script src="~/scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/scripts/Kendo/console.js"></script>
+    <script>
+        var WebApiUri = '@System.Configuration.ConfigurationManager.AppSettings["WebApiUri"]'
+    </script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>  @Html.ActionLink("Logout", "LogOut", "Auth", new { area = "" }, new { @class = "navbar-brand" })</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    
+    <script src="~/scripts/Toastr/toastr.js"></script>
+</body>
+</html>

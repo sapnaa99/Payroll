@@ -1,0 +1,81 @@
+﻿
+@model Model.CompanyModel
+
+<div class="portlet box blue">
+    @*<div class="portlet-title">
+            <div class="caption">
+                <h4>Add New Company</h4>
+                <hr />
+            </div>
+        </div>*@
+    <div class="portlet-body form ">
+        <form id="companyForm" class="horizontal-form">
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Company Name</label>
+                            @Html.TextBoxFor(x => x.CompanyName, null, new { @class = "form-control ", id = "CompanyName" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="submit" onclick="createCompany()" class="btn btn-success">
+                    <i class="fa fa-check"></i> Save
+                </button>
+                <button type="button" class="btn btn-Danger" id="btnCancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $("#btnCancel").on("click", function () {
+        $("#addCompanyDiv").hide()
+    });
+
+
+
+    function createCompany() {
+        debugger
+        $.validator.setDefaults({ ignore: '' });
+        $("#companyForm").validate({
+            wrapper: "div",
+            submitHandler: function (form) {
+                var model = {
+                    UserId: @CurrentUser.UserId,
+                    CompanyName: $('#CompanyName').val()
+                }
+
+                $.ajax({
+                    type: 'Post',
+                    url: WebApiUri + '/UtilityApi/CompanyIns',
+                    data: JSON.stringify(model),
+                    dataType: 'JSON',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        debugger
+                        if (response.ReturnMessage == 'You have already created Company with same name') {
+                            toastr.warning(response.ReturnMessage, 'Warning')
+                        }
+                        else if (response.ReturnMessage == 'Name cannot be empty') {
+                            toastr.warning(response.ReturnMessage, 'Warning')
+                        }
+                        else if (response.ReturnMessage == 'Saved Succesfully' || response.ReturnMessage == 'Updated Succesfully') {
+                            toastr.success(response.ReturnMessage, 'Success')
+                        }
+
+                        $("#grid").data("kendoGrid").dataSource.read();
+                        $("#addCompanyDiv").hide()
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+        });
+    }
+
+
+</script>

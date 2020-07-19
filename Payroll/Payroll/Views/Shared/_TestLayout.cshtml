@@ -1,0 +1,142 @@
+﻿@using System.Web.Optimization
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="SHORTCUT ICON" href="~/Content/Logo/favicon.ico" />
+    @*needs to be Bundled and minified*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-glyphicons.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.custom.css" rel="stylesheet" />
+    @*<link href="~/Content/Kendo/kendo.default.min.css" rel="stylesheet" />*@
+    <link href="~/Content/Kendo/kendo.default.mobile.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.common.min.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/Toastr/toastr.css" rel="stylesheet" />
+
+    @*Scirpts sections is loaded at first since kendo and jqeury is not recognized while app is running*@
+    @*Needs to be bundled and minified as well*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.unobtrusive.js"></script>
+    <script src="~/scripts/Kendo/jszip.min.js"></script>
+    <script src="~/scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/scripts/Kendo/console.js"></script>
+    <script src="~/scripts/Utility/Utility.js"></script>
+    <script>
+        var WebApiUri = '@System.Configuration.ConfigurationManager.AppSettings["WebApiUri"]'
+    </script>
+    <script src="~/scripts/BlockUi/BlockUi.js"></script>
+    <script src="~/scripts/BlockUi/BlockUiGif.js"></script>
+    @Styles.Render("~/bundles/content/admin")
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <div class="page-container">
+        <div class="sidebar-menu" style="width: 230px">
+            <div class="sidebar-header" style="height: 80px">
+                <a href="@Url.Action("Dashboard", "Auth")"> <img src="~/Content/Logo/IRASLOGO.png" style="width: 170px" /></a>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            <li>
+                                <a href="@Url.Action("Dashboard", "Auth")" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)" aria-expanded="true">
+                                    <i class="ti-layout-sidebar-left"></i>
+                                    <span>
+                                        Report
+                                    </span>
+                                </a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("Company", "Company")">Company</a></li>
+                                    <li><a href="@Url.Action("UserSel", "User")">User</a></li>
+                                    <li><a href="@Url.Action("SalaryRateSetup", "Salary")">Salary Setup</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Employee</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("EmployeeAttendence", "Attendence")">Attendence</a></li>
+                                    <li><a href="@Url.Action("Employee", "Employee")">Employee</a></li>
+                                    <li><a href="@Url.Action("EmployeeLeave", "Employee")">Leaves</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Leave</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("LeaveSel", "Leave")">Create</a></li>
+                                    <li><a href="@Url.Action("EmployeeLeaveCreate", "Leave")">Apply</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true">
+                                <i class="ti-pie-chart"></i><span>Salary</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("EmployeeSalary", "Salary")">Salary</a></li>
+
+                                </ul>
+                            </li>
+
+                            @*<li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-palette"></i><span>Hourly Details</span></a>
+                                <ul class="collapse">
+                                    <li><a href="@Url.Action("ProjectDetails", "EstimationDetail")">Project Details</a></li>
+                                    <li><a href="@Url.Action("SequenceDetails", "EstimationDetail")">Sequence Details</a></li>
+                                    <li><a href="@Url.Action("ShotDetail", "EstimationDetail")">Shot Details</a></li>
+                                </ul>
+                            </li>*@
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right" style="background:white">
+                            <img class="avatar user-thumb" src="~/Content/Admin/Images/avatar.png" alt="avatar">
+                            <h6 class="user-name dropdown-toggle" style="color: black" data-toggle="dropdown">@CurrentUser.DisplayName <i class="fa fa-angle-down"></i></h6>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="@Url.Action("LogOut", "Auth")"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-inner">
+                @RenderBody()
+            </div>
+
+        </div>
+        <footer>
+            <div class="footer-area">
+                <p>&copy; Copyright 2018. All right reserved. 
+                <a href="http://www.incessantrain.com/">Incessant Rain Animation Studios</a>.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/Toastr/toastr.js"></script>
+    <script src="~/Content/Admin/js/popper.min.js"></script>
+    <script src="~/Content/Admin/js/metisMenu.min.js"></script>
+    <script src="~/Content/Admin/js/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/Admin/js/Chart.min.js"></script>
+    <script src="~/Content/Admin/js/line-chart.js"></script>
+    <script src="~/Content/Admin/js/scripts.js"></script>
+</body>
+</html>

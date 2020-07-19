@@ -1,0 +1,190 @@
+﻿@model Model.UserModel
+@{
+    ViewBag.Title = "CreateUser";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Sign Up</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="portlet-body form ">
+        <form id="userForm">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="FName">First Name</label><br />
+                            @Html.TextBoxFor(x => x.FName, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FName, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="projectDiv">
+                        <div class="form-group">
+                            <label class="control-label" for="MName">Middle Name</label><br />
+                            @Html.TextBoxFor(x => x.MName, new { @Class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="LName">Last Name</label><br />
+                            @Html.TextBoxFor(x => x.LName, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.LName, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="row">
+                    @*<div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="SubDomain">Sub Domain Name</label><br />
+                            @Html.TextBoxFor(x => x.SubDomain, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.SubDomain, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>*@
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="Email">Email</label><br />
+                            @Html.TextBoxFor(x => x.Email, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Email, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="EmailConfirmation">Email Confirmation</label><br />
+                            @Html.TextBoxFor(x => x.EmailConfirmation, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.EmailConfirmation, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="Password">Password</label><br />
+                            @Html.PasswordFor(x => x.Password, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Password, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="PasswordConfirmation">Password Confirmation</label><br />
+                            @Html.PasswordFor(x => x.PasswordConfirmation, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PasswordConfirmation, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h4>User Information</h4>
+            <hr />
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="ContactNumber">Contact Number</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.ContactNumber, new { @id = "ContactNumber", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.ContactNumber, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="MobileNumber">Mobile Number</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.MobileNumber, new { @id = "MobileNumber", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.MobileNumber, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="PersonalEmail">Personal Email</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.PersonalEmail, new { @id = "PersonalEmail", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.PersonalEmail, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="GenderListItemId">Gender</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.GenderListItemId, new { @id = "GenderListItemId", @class = "dropdown-menu" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.GenderListItemId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="Address1">Address 1</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.Address1, new { @id = "Address1", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.Address1, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="Address2">Address2</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.Address2, new { @id = "Address2", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.Address2, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="City">City</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.City, new { @id = "City", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.City, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" for="State">
+                        <div class="form-group">
+                            <label class="control-label">State</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.State, new { @id = "State", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.State, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="Country">Country</label><br />
+                            @Html.TextBoxFor(x => x.UserInformation.Country, new { @id = "Country", @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UserInformation.Country, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="form-body">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label class="control-label" for="Address1">Select Plan</label><br />
+                            <div id="planGroup"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>*@
+
+            <div class="form-actions right">
+                <button type="submit" class="btn btn-primary" id="btnSubmit">
+                    <span class="glyphicon glyphicon-plus"></span> Sign Up
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

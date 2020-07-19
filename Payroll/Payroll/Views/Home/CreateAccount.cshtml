@@ -1,0 +1,340 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="SHORTCUT ICON" href="~/Content/Logo/favicon.ico" />
+    @*needs to be Bundled and minified*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-glyphicons.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.default.mobile.min.css" rel="stylesheet" />
+    <link href="~/Content/Kendo/kendo.common.min.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/Toastr/toastr.css" rel="stylesheet" />
+
+    @*Scirpts sections is loaded at first since kendo and jqeury is not recognized while app is running*@
+    @*Needs to be bundled and minified as well*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.js"></script>
+    <script src="~/scripts/Validator/jquery.validate.unobtrusive.js"></script>
+    <script src="~/scripts/Kendo/jszip.min.js"></script>
+    <script src="~/scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/scripts/Kendo/console.js"></script>
+    <script src="~/scripts/Utility/Utility.js"></script>
+    <script src="~/scripts/BlockUi/BlockUi.js"></script>
+    <script src="~/scripts/BlockUi/BlockUiGif.js"></script>
+    <script>
+        var WebApiUri = '@System.Configuration.ConfigurationManager.AppSettings["WebApiUri"]'
+    </script>
+
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    @*<div class="main-content">*@
+
+    @model Model.UserModel
+    @{
+        ViewBag.Title = "CreateUser";
+    }
+
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">
+                <h2>Sign Up</h2>
+                <hr />
+            </div>
+        </div>
+        <div class="portlet-body form ">
+            <form id="userForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="FName">First Name</label><br />
+                                @Html.TextBoxFor(x => x.FName, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.FName, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="projectDiv">
+                            <div class="form-group">
+                                <label class="control-label" for="MName">Middle Name</label><br />
+                                @Html.TextBoxFor(x => x.MName, new { @Class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="LName">Last Name</label><br />
+                                @Html.TextBoxFor(x => x.LName, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.LName, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="SubDomain">Sub Domain Name</label><br />
+                                @Html.TextBoxFor(x => x.SubDomain, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.SubDomain, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="Email">Email</label><br />
+                                @Html.TextBoxFor(x => x.Email, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Email, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="EmailConfirmation">Email Confirmation</label><br />
+                                @Html.TextBoxFor(x => x.EmailConfirmation, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.EmailConfirmation, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="Password">Password</label><br />
+                                @Html.PasswordFor(x => x.Password, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" for="PasswordConfirmation">Password Confirmation</label><br />
+                                @Html.PasswordFor(x => x.PasswordConfirmation, new { @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.PasswordConfirmation, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h4>User Information</h4>
+                <hr />
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="ContactNumber">Contact Number</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.ContactNumber, new { @id = "ContactNumber", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.ContactNumber, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="MobileNumber">Mobile Number</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.MobileNumber, new { @id = "MobileNumber", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.MobileNumber, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="PersonalEmail">Personal Email</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.PersonalEmail, new { @id = "PersonalEmail", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.PersonalEmail, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="GenderListItemId">Gender</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.GenderListItemId, new { @id = "GenderListItemId", @class = "dropdown-menu" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.GenderListItemId, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="Address1">Address 1</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.Address1, new { @id = "Address1", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.Address1, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="Address2">Address2</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.Address2, new { @id = "Address2", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.Address2, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="City">City</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.City, new { @id = "City", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.City, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" for="State">
+                            <div class="form-group">
+                                <label class="control-label">State</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.State, new { @id = "State", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.State, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="Country">Country</label><br />
+                                @Html.TextBoxFor(x => x.UserInformation.Country, new { @id = "Country", @Class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UserInformation.Country, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="control-label" for="Address1">Select Plan</label><br />
+                                <div id="planGroup"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">
+                        <span class="glyphicon glyphicon-plus"></span> Sign Up
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        $(function () {
+            //Microsoft Unobtrusive jQuery validation has already binded so must kick off parse to bind partial loaded dynamic form
+            //$.validator.unobtrusive.parse($('userForm'));
+            UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+
+
+            $.ajax({
+                type: 'GET',
+                url: WebApiUri + '/UtilityApi/PlanSel',
+                data: JSON.stringify(),
+                dataType: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var radioHtml = ''
+                    for (i = 0; i < response.length; i++) {
+                        radioHtml += ' <input type="radio" name="PlanId" value="' + response[i].PlanId + '"><label class="form-control">' + response[i].Name + ' ( ' + response[i].DurationInMonth + ' month + ' + response[i].CompanyLimit + ' number of Company )</label><br><br>'
+                    }
+                    $("#planGroup").html(radioHtml)
+
+                },
+                error: function (response) {
+                }
+            });
+        });
+        $('#btnSubmit').click(function (e) {
+            debugger
+            if ($("#userForm").valid())
+                $('#userForm').submit(e);
+            else
+                return false;
+        });
+        $("#userForm").on("submit", function (e) {
+            debugger
+            e.preventDefault();
+
+            var email = $("#Email").val(),
+                emailConfirmation = $("#EmailConfirmation").val(),
+                Password = $("#Password").val(),
+                PasswordConfirmation = $("#PasswordConfirmation").val()
+
+            if (email != emailConfirmation) {
+                toastr.warning("Email not same", "Warning")
+                return;
+            }
+            if (Password != PasswordConfirmation) {
+                toastr.warning("Password not same", "Warning")
+                return;
+            }
+
+            if ($("input[name='PlanId']:checked") != true) {
+                toastr.warning("Please Select a plan", "Warning")
+                return 
+            }
+
+            var userInformationModel = {
+                ContactNumber: parseInt($("#ContactNumber").val()),
+                MobileNumber: parseInt( $("#MobileNumber").val()),
+                PersonalEmail: $("#PersonalEmail").val(),
+                GenderListItemId: $("#GenderListItemId").val(),
+                Address1: $("#Address1").val(),
+                Address2: $("#Address2").val(),
+                City: $("#City").val(),
+                State: $("#State").val(),
+                Country: $("#Country").val()
+            }
+            var userModel = {
+                FName: $("#FName").val(),
+                MName: $("#MName").val(),
+                LName: $("#LName").val(),
+                Email: $("#Email").val(),
+                EmailConfirmation: $("#EmailConfirmation").val(),
+                Password: $("#Password").val(),
+                PasswordConfirmation: $("#PasswordConfirmation").val(),
+                UserInformation: userInformationModel,
+                PlanId: $("input[name='PlanId']:checked").val(),
+                SubDomain: $("#SubDomain").val()
+            }
+
+            $.ajax({
+                type: 'Post',
+                url: WebApiUri + '/UserApi/UserIns',
+                data: JSON.stringify(userModel),
+                dataType: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    toastr.success(response.ReturnMessage, 'Success')
+                },
+                error: function (response) {
+                }
+            });
+        })
+    </script>
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/Toastr/toastr.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeLeave";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Employee Leave</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<div style="margin-top:10px"></div>
+<div id="grid" style="margin-top:10px"></div>
+<div id="dialog"></div>
+
+<script>
+
+    var LeaveStatus = [{
+        "LeaveStatusListItemId": 0,
+        "LeaveStatus": "Select.."
+    }]
+
+    var Status,
+    EmployeeLeaveId ,
+    InsertUserId
+    $.ajax({
+        type: 'Get',
+        url: WebApiUri + '/UtilityApi/ListItemCategoryDetailSel',
+        data: { listItemCategoryName : 'LeaveStatus'},
+        dataType: 'JSON',
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            for (var i = 0; i < response.length; ++i) {
+                LeaveStatus[i + 1] = {
+                    'LeaveStatusListItemId': response[i].ListItemId,
+                    'LeaveStatus': response[i].ListItemName
+                };
+            }
+        },
+        error: function (response) {
+        }
+    });
+
+    $(function() {
+        $("#grid")
+            .kendoGrid({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: WebApiUri + '/EmployeeApi/EmployeeLeaveSel',
+                                contentType: 'application/json; charset=utf-8',
+                                type: "GET",
+                                data: { CompanyId: 2},
+                                dataType: 'JSON'
+                            },
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    EmployeeLeaveId: {
+                                        type: "number",
+                                        editable: false
+                                    },
+                                    EmployeeId: {
+                                        type: "number",
+                                        editable: false
+                                    },
+                                    LeaveName: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    AppliedDate: {
+                                        type: "date",
+                                        editable: false
+                                    },
+                                    StartDate: {
+                                        type: "date",
+                                        editable: false
+                                    },
+                                    EndDate: {
+                                        type: "date",
+                                        editable: false
+                                    },
+                                    Description: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Remarks: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    Email: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    EmployeeFullName: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    ApprovedUser: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    LeaveStatus: {
+                                        type: "string",
+                                        editable: false
+                                    },
+                                    LeaveStatusListItemId: {
+                                        type: "number",
+                                        defaultValue: 0,
+                                        editable: true
+                                    }
+
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+
+                    scrollable: true,
+                    sortable: true,
+                    editable: true,
+                    selectable: true,
+                    filterable: true,
+                    pageable: {
+                        input: true,
+                        pageSizes: [10, 25, 50, "all"]
+                    },
+                    dataBound: function() {
+                        record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                        for (var i = 0; i < this.columns.length; i++) {
+                            this.autoFitColumn(i);
+                        }
+                    },
+                    columns: [
+                        {
+                            field: "EmployeeLeaveId",
+                            title: "EmployeeLeaveId",
+                            hidden: true
+                        }, {
+                            field: "EmployeeId",
+                            title: "EmployeeId",
+                            hidden: true
+
+                        }, {
+                            field: "LeaveStatusListItemId", width: "150px",
+                            editor: categoryDropDownEditor,
+                            title: "Action",
+                            template: "#=getCategoryName(LeaveStatusListItemId)#"
+                        }
+                        //,{
+                        //    field: "LeaveStatus",
+                        //    title: "Status",
+                        //    template: '#= leaveStatus(LeaveStatus)#',
+
+                        //}
+                        , {
+                            field: "EmployeeFullName",
+                            title: "Employee Full Name"
+
+                        }, {
+                            field: "LeaveName",
+                            title: "Leave Name"
+
+                        }, {
+                            field: "AppliedDate",
+                            title: "Applied Date", format: "{0:MM/dd/yyyy}"
+
+                        }, {
+                            field: "StartDate",
+                            title: "Start Date", format: "{0:MM/dd/yyyy}"
+
+                        }, {
+                            field: "EndDate",
+                            title: "End Date", format: "{0:MM/dd/yyyy}"
+
+                        }, {
+                            field: "Description",
+                            title: "Description"
+
+                        }, {
+                            field: "Remarks",
+                            title: "Remarks"
+
+                        }, {
+                            field: "Email",
+                            title: "Email"
+
+                        }, {
+                            field: "ApprovedUser",
+                            title: "Approved User"
+
+                        }
+                    ]
+                }
+            );
+    });
+
+
+
+    
+
+    function categoryDropDownEditor(container, options) {
+        $('<input data-bind="value:' + options.field + '"/>')
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "LeaveStatus",
+                dataValueField: "LeaveStatusListItemId",
+                dataSource: LeaveStatus
+            });
+    }
+
+    function getCategoryName(categoryID) {
+        for (var idx = 0, length = LeaveStatus.length; idx < length; idx++) {
+            if (LeaveStatus[idx].LeaveStatusListItemId === categoryID) {
+                return LeaveStatus[idx].LeaveStatus;
+            }
+        }
+    }
+
+    $("#btnSalaryRateAdd").on("click",
+        function() {
+            $.ajax({
+                url: '/Salary/AddSalaryRate',
+                type: 'GET',
+                success: function(data) {
+                    var addSalaryRatDiv = $("#addSalaryRatDiv");
+                    addSalaryRatDiv.html('');
+                    addSalaryRatDiv.html(data);
+                    $("#btnSalaryRateAdd").hide();
+                    $("#addSalaryRatDiv").show();
+                    loadPartialViewScript()
+                },
+                error: function() {
+                    toastr.error("Some error occurred", 'Error');
+                }
+            });
+        });
+
+    $("#grid").on("change",
+        function(e) {
+            BlockInterFace()
+            var grid = $("#grid")
+                    .data("kendoGrid"),
+                dataItem = grid.dataItem($(e.target)
+                    .closest("tr"));
+
+            EmployeeLeaveId = dataItem.EmployeeLeaveId;
+            InsertUserId = @CurrentUser.UserId;
+            var dialog = $("#dialog");
+            dialog.kendoDialog({
+                width: "400px",
+                title: "SAVE",
+                closable: true,
+                modal: true,
+                content: "Save Changes?",
+                actions: [
+                    {
+                        text: 'Close',
+                        action: onCancel
+                    }, {
+                        text: 'Ok',
+                        primary: true,
+                        action: onOK
+                    }
+                ]
+            })
+            dialog.data("kendoDialog")
+                .open();
+        })
+
+
+    function onOK() {
+        debugger
+        var data = $("#grid").data("kendoGrid").dataSource.data();
+        var res = $.grep(data, function (d) {
+            return d.EmployeeLeaveId == EmployeeLeaveId;
+        });
+
+        for (var i = 0; i < LeaveStatus.length; ++i) {
+            if (LeaveStatus[i].LeaveStatusListItemId == res[0].LeaveStatusListItemId) {
+                Status = LeaveStatus[i].LeaveStatus            }
+            }
+        var model = {
+            Status: Status,
+            EmployeeLeaveId: EmployeeLeaveId,
+            InsertUserId: InsertUserId
+        };
+        $.ajax({
+            type: 'Post',
+            url: WebApiUri + '/EmployeeApi/EmployeeleaveStatusTsk',
+            data: JSON.stringify(model),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function(response) {
+                toastr.success(response.ReturnMessage, 'Success')
+                $("#grid")
+                    .data("kendoGrid").dataSource.read();
+                $.unblockUI();
+            },
+            error: function(response) {}
+        });
+    }
+
+    function onCancel() {
+        $("#grid")
+            .data("kendoGrid").dataSource.read();
+        $.unblockUI();
+    }
+
+
+</script>

@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewBag.Title = "Salary Rate";
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Salary Rate Setup</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<button type="button" id="btnSalaryRateAdd" class="btn btn-info" data-html="add" style="margin-top:10px;">Add</button>
+<div style="margin-top:10px"></div>
+<div id="addSalaryRatDiv" class="portlet-body portlet-collapsed" style="display: none;"></div>
+<div id="grid" style="margin-top:10px"></div>
+<div id="dialog"></div>
+
+<script>
+    var  CompanyId,
+    RateName,
+    From,
+    Upto,
+    Rate ,
+        InsertUserId,
+        SalaryRateSetupId
+    $(function() {
+        $("#grid")
+            .kendoGrid({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: WebApiUri + '/SalaryApi/SalaryRateSel',
+                                contentType: 'application/json; charset=utf-8',
+                                type: "GET",
+                                data: { clientId: @CurrentUser.ClientId},
+                                dataType: 'JSON'
+                            },
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    SalaryRateSetupId: {
+                                        type: "number",
+                                        editable: false
+                                    },
+                                    CompanyId: {
+                                        type: "number",
+                                        editable: true
+                                    },
+                                    RateName: {
+                                        type: "string",
+                                        editable: true
+                                    },
+                                    From: {
+                                        type: "number",
+                                        editable: true
+                                    },
+                                    Upto: {
+                                        type: "number",
+                                        editable: true
+                                    },
+                                    Rate: {
+                                        type: "number",
+                                        editable: true
+                                    },
+                                    CompanyName: {
+                                        type: "string",
+                                        editable: false
+                                    }
+
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+
+                    scrollable: true,
+                    sortable: true,
+                    editable: true,
+                    selectable: true,
+                    filterable: true,
+                    pageable: {
+                        input: true,
+                        pageSizes: [10, 25, 50, "all"]
+                    },
+                        dataBound: function() {
+                            record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                            //for (var i = 0; i < this.columns.length; i++) {
+                            //    this.autoFitColumn(i);
+                            //}
+                        },
+                    columns: [
+                        {
+                            field: "SalaryRateSetupId",
+                            title: "SalaryRateSetupId",
+                            hidden: true
+                        }, {
+                            field: "CompanyId",
+                            title: "Company Id",
+                            hidden: true
+
+                        }, {
+                            field: "RateName",
+                            title: "Rate Name"
+
+                        }, {
+                            field: "From",
+                            title: "Salary Start From"
+
+                        }, {
+                            field: "Upto",
+                            title: "Salary End"
+                        }, {
+                            field: "Rate",
+                            title: "Rate"
+                        }, {
+                            field: "CompanyName",
+                            title: "Company Name"
+                        }
+                    ]
+                }
+            );
+    });
+    $("#btnSalaryRateAdd").on("click",
+        function() {
+            debugger
+            $.ajax({
+                url: '/Salary/AddSalaryRate',
+                type: 'GET',
+                success: function(data) {
+                    var addSalaryRatDiv = $("#addSalaryRatDiv");
+                    addSalaryRatDiv.html('');
+                    addSalaryRatDiv.html(data);
+                    $("#btnSalaryRateAdd").hide();
+                    $("#addSalaryRatDiv").show();
+                    loadPartialViewScript()
+                },
+                error: function() {
+                    toastr.error("Some error occurred", 'Error');
+                }
+            });
+        });
+
+    $("#grid").on("change",
+        function(e) {
+            debugger;
+            BlockInterFace()
+            var grid = $("#grid")
+                    .data("kendoGrid"),
+                dataItem = grid.dataItem($(e.target)
+                    .closest("tr"));
+            SalaryRateSetupId = dataItem.SalaryRateSetupId;
+            CompanyId = dataItem.CompanyId;
+            RateName = dataItem.RateName;
+            From = dataItem.From;
+            Upto = dataItem.Upto;
+            Rate = dataItem.Rate;
+            InsertUserId = @CurrentUser.UserId;
+            var dialog = $("#dialog");
+            dialog.kendoDialog({
+                width: "400px",
+                title: "SAVE",
+                closable: true,
+                modal: true,
+                content: "Save Changes?",
+                actions: [
+                    {
+                        text: 'Close',
+                        action: onCancel
+                    }, {
+                        text: 'Ok',
+                        primary: true,
+                        action: onOK
+                    }
+                ]
+            })
+            dialog.data("kendoDialog")
+                .open();
+        })
+
+
+    function onOK() {
+        debugger
+        var model = {
+            SalaryRateSetupId: SalaryRateSetupId,
+            CompanyId: CompanyId,
+            RateName: RateName,
+            From: From,
+            Upto: Upto,
+            Rate: Rate ,
+            InsertUserId: InsertUserId
+        };
+        $.ajax({
+            type: 'Post',
+            url: WebApiUri + '/SalaryApi/SalaryRateSetupIns',
+            data: JSON.stringify(model),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function(response) {
+                toastr.success(response.ReturnMessage, 'Success')
+                $("#grid")
+                    .data("kendoGrid").dataSource.read();
+
+                $.unblockUI();
+            },
+            error: function(response) {}
+        });
+    }
+
+    function onCancel() {
+        $("#grid")
+            .data("kendoGrid").dataSource.read();
+        $.unblockUI();
+    }
+
+    function loadPartialViewScript() {
+
+        $("#CompanyId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId},
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+
+
+        $("#btnCancel").on("click",
+            function() {
+                $("#addSalaryRatDiv").hide();
+                $("#btnSalaryRateAdd").show();
+            });
+
+
+        $("#salaryRateForm").on("submit",
+            function(e) {
+                debugger
+                e.preventDefault();
+                $(this).removeData("validator").removeData("unobtrusiveValidation"); //remove the form validation
+                $.validator.unobtrusive.parse($(this)); //add the form validation
+
+                if ($(this).valid()) {
+                    debugger
+
+                        //wrapper: "div",
+                        //submitHandler: function(form) {
+                            var model = {
+                                RateName: $('#RateName').val(),
+                                From: $('#From').val(),
+                                Upto: $('#Upto').val(),
+                                Rate: $('#Rate').val(),
+                                InsertUserId: parseInt('@CurrentUser.UserId')
+                            }
+
+                            $.ajax({
+                                type: 'Post',
+                                url: WebApiUri + '/SalaryApi/SalaryRateSetupIns',
+                                data: JSON.stringify(model),
+                                dataType: 'JSON',
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+                                    //debugger
+                                    if (response.ReturnMessage == 'Start Salary is more than End Salary') {
+                                        toastr.warning(response.ReturnMessage, 'Warning')
+                                    }
+                                    else if (response.ReturnMessage == 'Salary range already exist') {
+                                        toastr.warning(response.ReturnMessage, 'Warning')
+                                    } else {
+                                        toastr.success(response.ReturnMessage, 'Success')
+                                    }
+                                    $("#grid").data("kendoGrid").dataSource.read();
+                                    $("#addSalaryRatDiv").hide()
+                                    $("#btnSalaryRateAdd").show();
+                                },
+                                error: function (response) {
+                                }
+                            });
+                        //}
+
+                }
+            }); /////
+
+
+    }
+
+</script>

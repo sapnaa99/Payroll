@@ -1,0 +1,66 @@
+﻿
+@model Model.LeaveModel
+
+<div class="portlet box blue">  
+    <div class="portlet-body form ">
+        <form id="leaveForm" class="horizontal-form">
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Leave Name</label>
+                            @Html.TextBoxFor(x => x.LeaveName, null, new { @class = "form-control ", id = "LeaveName" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Days</label>
+                            @Html.TextBoxFor(x => x.Days, null, new { @class = "form-control ", id = "Days" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="CompanyId1">Company</label><br />
+                            @Html.TextBoxFor(x => x.CompanyId, new { @Class = "k-dropdown",@ID= "CompanyId1" })
+                            @Html.ValidationMessageFor(x => x.CompanyId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="submit" onclick="createLeave()" class="btn btn-success">
+                    <i class="fa fa-check"></i> Save
+                </button>
+                <button type="button" class="btn btn-Danger" id="btnCancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+        $("#CompanyId1").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId},
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+
+    });
+    $("#btnCancel").on("click", function () {
+        $("#addLeaveDiv").hide()
+    });    
+</script>

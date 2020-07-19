@@ -1,0 +1,235 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeAttendence";
+
+}
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <h2>Employee List</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<div class="portlet-body form ">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-offset-8 col-md-6  col-lg-offset-8  col-lg-12 col-xs-offset-6  col-xs-12 " id="CompanyIdDiv">
+                <div class="form-group">
+                    <label class="control-label">Company Name : </label>
+                    @Html.TextBox("CompanyId")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="grid"></div>
+
+<script>
+    var CompanyId;
+    CompanyId = 0;
+    $(function () {
+        debugger;
+        LoadGrid()
+        UtilityListItemCategoryDropDown('GenderListItemId', 'Gender')
+        $("#CompanyId").kendoDropDownList({
+            filter: "startswith",
+            optionLabel: "Select..",
+            dataTextField: "CompanyName",
+            dataValueField: "CompanyId",
+            change: onCompanyChange,
+            dataSource: {
+                transport: {
+                    read: {
+                        type: 'Get',
+                        url: WebApiUri + '/UtilityApi/CompanySel',
+                        data: { UserId: @CurrentUser.UserId},
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8"
+                    }
+                }
+            }
+        }).data("kendoDropDownList");
+
+    });
+    function LoadGrid() {
+        debugger;
+        $("#grid")
+            .kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: WebApiUri + '/AttendenceApi/EmployeeAttendence',
+                            contentType: 'application/json; charset=utf-8',
+                            type: "GET",
+                            dataType: 'JSON',
+                            data: {
+                                CompanyId: CompanyId
+                            }
+                        },
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                AttendanceId: {
+                                    type: "int",
+                                    editable: false,
+                                },
+                                CompanyId: {
+                                    type: "int",
+                                    editable: false,
+                                },
+                                EmployeeId: {
+                                    type: "int",
+                                    editable: false
+                                },
+                                EmployeeName: {
+                                    type: "string",
+                                    editable: false
+                                },
+                                InTime: {
+                                    type: "datetime",
+                                    editable: false
+                                },
+                                OutTime: {
+                                    type: "datetime",
+                                    editable: false
+                                },
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+
+                scrollable: true,
+                sortable: true,
+                editable: true,
+                selectable: true,
+                filterable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [10, 25, 50, "all"]
+                },
+                dataBound: function () {
+                    record = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    for (var i = 0; i < this.columns.length; i++) {
+                        this.autoFitColumn(i);
+                    }
+                },
+                columns: [
+                    {
+                        field: "AttendanceId",
+                        title: "AttendanceId",
+                        hidden: true
+
+                    },
+                     {
+                         field: "CompanyId",
+                         title: "CompanyId",
+                         hidden:true
+                     },
+                     {
+                         field: "EmployeeId",
+                         title: "EmployeeId"
+                     },
+                     {
+                        field: "EmployeeName",
+                        title: "EmployeeName"
+                     },
+                     {
+                        field: "IsPresent",
+                        title: "Is Present",
+                        template: '#= isPresentTemplate(IsPresent)#',
+                        width: 100
+                     },
+                     {
+                         field: "InTime",
+                         title: "Log In"
+                     },
+                     {
+                         field: "OutTime",
+                         title: "Log Out"
+                     },
+                     {
+                         field: "OutTime",
+                         title: "Log Out",
+                         template: '<button id="btnOut" class="btnOut btn btn-success">Log-out</button>',
+                         width: 100
+                     }, ]
+            });
+    }
+
+
+    function onCompanyChange() {
+        debugger
+        CompanyId = parseInt($("#CompanyId").val());
+        $('#grid').data().kendoGrid.destroy();
+        $('#grid').empty();
+        LoadGrid();
+    }
+
+
+    //log-in function
+    function isPresentTemplate(IsPresent, e) {
+        if (IsPresent == true)
+            return '<button id="btnActive" class="btnActive btn btn-primary">Present</button>'
+        if (IsPresent == false || IsPresent == null)
+            return '<button id="btnActive" class="btnActive btn btn-secondary">Absent</button>'
+    }
+
+    $("#grid").on("click", "button.btnActive", function (e) {
+        debugger;
+     var grid = $("#grid")
+            .data("kendoGrid"),
+            dataItem = grid.dataItem($(e.target).closest("tr"));
+        var model = { CompanyId: dataItem.CompanyId, EmployeeId: dataItem.EmployeeId , IsPresent:dataItem.IsPresent,UserId:@CurrentUser.UserId}
+        var employeeAttendence = {
+            CompanyId: model.CompanyId,
+            EmployeeId: model.EmployeeId,
+            IsPresent: model.IsPresent,
+            InsertUserId:model.UserId
+        }
+        $.ajax({
+            type: 'Post',
+            url: WebApiUri + '/AttendenceApi/EmployeeAttendenceIns',
+            data: JSON.stringify(employeeAttendence),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                $("#grid").data("kendoGrid").dataSource.read();
+            },
+            error: function (response) {
+                alert('Error Occured!')
+            }
+        });
+
+    });
+
+
+    $("#grid").on("click", "button.btnOut", function (e) {
+        debugger;
+        var grid = $("#grid")
+            .data("kendoGrid"),
+            dataItem = grid.dataItem($(e.target).closest("tr"));
+        var model = { CompanyId: dataItem.CompanyId, AttendanceId: dataItem.AttendanceId }
+        var employeeAttendence = {
+            CompanyId:model.CompanyId,
+            AttendanceId: model.AttendanceId
+        }
+        $.ajax({
+            type: 'Post',
+            url: WebApiUri + '/AttendenceApi/EmployeeAttendenceLogoutIns',
+            data: JSON.stringify(employeeAttendence),
+            dataType: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                $("#grid").data("kendoGrid").dataSource.read();
+            },
+            error: function (response) {
+                alert('Error Occured!')
+            }
+        });
+
+    });
+</script>

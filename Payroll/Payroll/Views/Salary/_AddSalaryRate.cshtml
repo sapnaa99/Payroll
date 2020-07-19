@@ -1,0 +1,67 @@
+﻿
+@model Model.SalaryRateSetupModel
+
+<div class="portlet box blue">
+    @*<div class="portlet-title">
+            <div class="caption">
+                <h4>Add New Company</h4>
+                <hr />
+            </div>
+        </div>*@
+    <form id="salaryRateForm" class="horizontal-form">
+        <div class="portlet-body form ">
+
+            <div class="form-body">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Rate Name</label>
+                            @Html.TextBoxFor(x => x.RateName, null, new { @class = "form-control ", id = "RateName" })
+                            @Html.ValidationMessageFor(x => x.RateName, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">From</label>
+                            @Html.TextBoxFor(x => x.From, null, new { @class = "form-control ", id = "From" })
+                            @Html.ValidationMessageFor(x => x.From, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Upto</label>
+                            @Html.TextBoxFor(x => x.Upto, null, new { @class = "form-control ", id = "Upto" })
+                            @Html.ValidationMessageFor(x => x.Upto, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Company Name</label>
+                            @Html.TextBoxFor(x => x.CompanyId, null, new { @class = "form-control ", id = "CompanyId" })
+                            @Html.ValidationMessageFor(x => x.CompanyId, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Rate</label>
+                            @Html.TextBoxFor(x => x.Rate, null, new { @class = "form-control ", id = "Rate" })
+                            @Html.ValidationMessageFor(x => x.Rate, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="form-actions right">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" class="btn btn-Danger" id="btnCancel">Cancel</button>
+        </div>
+    </form>
+</div>
