@@ -1,0 +1,9 @@
+D:\PersonalP\Payroll\Payroll\BusinessEntities\bin\Debug\BusinessEntities.dll.config
+D:\PersonalP\Payroll\Payroll\BusinessEntities\bin\Debug\BusinessEntities.dll
+D:\PersonalP\Payroll\Payroll\BusinessEntities\bin\Debug\BusinessEntities.pdb
+D:\PersonalP\Payroll\Payroll\BusinessEntities\bin\Debug\EntityFramework.dll
+D:\PersonalP\Payroll\Payroll\BusinessEntities\bin\Debug\EntityFramework.xml
+D:\PersonalP\Payroll\Payroll\BusinessEntities\obj\Debug\BusinessEntities.csproj.CoreCompileInputs.cache
+D:\PersonalP\Payroll\Payroll\BusinessEntities\obj\Debug\BusinessEntities.dll
+D:\PersonalP\Payroll\Payroll\BusinessEntities\obj\Debug\BusinessEntities.pdb
+D:\PersonalP\Payroll\Payroll\BusinessEntities\obj\Debug\BusinessEntities.csprojResolveAssemblyReference.cache

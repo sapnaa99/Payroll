@@ -1,0 +1,1385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PayrollModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Attendance">
+    <Key>
+      <PropertyRef Name="AttendanceId" />
+    </Key>
+    <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="InTime" Type="Time" Precision="7" />
+    <Property Name="OutTime" Type="Time" Precision="7" />
+    <Property Name="IsPresent" Type="Boolean" Nullable="false" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Attendance_Company" FromRole="Attendance" ToRole="User" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Attendance_Employee" FromRole="Attendance" ToRole="Employee" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Attendance_User" FromRole="Attendance" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientId" />
+    </Key>
+    <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Client_UserId_User_UserId" FromRole="Client" ToRole="User" />
+    <NavigationProperty Name="Companies" Relationship="Self.FK_Company_Client_ClientId_ClientId" FromRole="Client" ToRole="Company" />
+    <NavigationProperty Name="SubDomains" Relationship="Self.FK_SubDomain_Client" FromRole="Client" ToRole="SubDomain" />
+    <NavigationProperty Name="Subscriptions" Relationship="Self.FK_Subscription_ClientId_Client_ClientId" FromRole="Client" ToRole="Subscription" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClientId" Type="Int32" Nullable="false" />
+    <Property Name="InsertUserID" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Company_Client_ClientId_ClientId" FromRole="Company" ToRole="Client" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
+    <NavigationProperty Name="Leaves" Relationship="Self.FK_Leave_Company" FromRole="Company" ToRole="Leave" />
+    <NavigationProperty Name="SalaryRateSetups" Relationship="Self.FK_SalaryRateSetup_Company" FromRole="Company" ToRole="SalaryRateSetup" />
+  </EntityType>
+  <EntityType Name="Complain">
+    <Key>
+      <PropertyRef Name="ComplainId" />
+    </Key>
+    <Property Name="ComplainId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ComplainSeverityListItemId" Type="Int32" Nullable="false" />
+    <Property Name="ConsultManagement" Type="Boolean" Nullable="false" />
+    <Property Name="ComplainStatusListItemId" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Complain_Employee_EmployeeId_" FromRole="Complain" ToRole="Employee" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_Complain_ListItem_ComplainSeverity_" FromRole="Complain" ToRole="ListItem" />
+    <NavigationProperty Name="ListItem1" Relationship="Self.FK_Complain_ListItem_ComplainStatus_" FromRole="Complain" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Passsword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Employee" FromRole="Employee" ToRole="Attendance" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
+    <NavigationProperty Name="Complains" Relationship="Self.FK_Complain_Employee_EmployeeId_" FromRole="Employee" ToRole="Complain" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Employee_User" FromRole="Employee" ToRole="User" />
+    <NavigationProperty Name="EmployeeInformations" Relationship="Self.FK_EmployeeInformation_Employee" FromRole="Employee" ToRole="EmployeeInformation" />
+    <NavigationProperty Name="EmployeeLeaves" Relationship="Self.FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_" FromRole="Employee" ToRole="EmployeeLeave" />
+    <NavigationProperty Name="EmployeeLeaveDetails" Relationship="Self.FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_" FromRole="Employee" ToRole="EmployeeLeaveDetail" />
+    <NavigationProperty Name="EmployeeSalaries" Relationship="Self.FK_EmployeeSalary_Employee" FromRole="Employee" ToRole="EmployeeSalary" />
+    <NavigationProperty Name="SalaryTransactions" Relationship="Self.FK_SalaryTransaction_Employee_EmployeeId_" FromRole="Employee" ToRole="SalaryTransaction" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Employee_EmployeeId_" FromRole="Employee" ToRole="Ticket" />
+  </EntityType>
+  <EntityType Name="EmployeeInformation">
+    <Key>
+      <PropertyRef Name="EmployeeInformationId" />
+    </Key>
+    <Property Name="EmployeeInformationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="ContactNumber" Type="Int32" Nullable="false" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="PersonalEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GenderListItemId" Type="Int32" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeInformation_Employee" FromRole="EmployeeInformation" ToRole="Employee" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_EmployeeInformation_ListItem" FromRole="EmployeeInformation" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="EmployeeLeave">
+    <Key>
+      <PropertyRef Name="EmployeeLeaveId" />
+    </Key>
+    <Property Name="EmployeeLeaveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="LeaveId" Type="Int32" />
+    <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LeaveStatusListItemId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ApprovedUserId" Type="Int32" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_" FromRole="EmployeeLeave" ToRole="Employee" />
+    <NavigationProperty Name="Leave" Relationship="Self.FK_EmployeeLeave_LeaveId__Leave_LeaveId_" FromRole="EmployeeLeave" ToRole="Leave" />
+    <NavigationProperty Name="User" Relationship="Self.FK_EmployeeLeave_UserId__User_ApprovedUserId_" FromRole="EmployeeLeave" ToRole="User" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_EmployeeLeave_ListItem" FromRole="EmployeeLeave" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="EmployeeLeaveDetail">
+    <Key>
+      <PropertyRef Name="EmployeeLeaveDetailId" />
+    </Key>
+    <Property Name="EmployeeLeaveDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="LeaveId" Type="Int32" Nullable="false" />
+    <Property Name="Days" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_" FromRole="EmployeeLeaveDetail" ToRole="Employee" />
+    <NavigationProperty Name="Leave" Relationship="Self.FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_" FromRole="EmployeeLeaveDetail" ToRole="Leave" />
+  </EntityType>
+  <EntityType Name="EmployeeSalary">
+    <Key>
+      <PropertyRef Name="EmployeeSalaryId" />
+    </Key>
+    <Property Name="EmployeeSalaryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="BasicSalary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Allowance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="InserUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeSalary_Employee" FromRole="EmployeeSalary" ToRole="Employee" />
+    <NavigationProperty Name="User" Relationship="Self.FK_EmployeeSalary_User" FromRole="EmployeeSalary" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Leave">
+    <Key>
+      <PropertyRef Name="LeaveId" />
+    </Key>
+    <Property Name="LeaveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeaveName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Days" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_Leave_Company" FromRole="Leave" ToRole="Company" />
+    <NavigationProperty Name="EmployeeLeaves" Relationship="Self.FK_EmployeeLeave_LeaveId__Leave_LeaveId_" FromRole="Leave" ToRole="EmployeeLeave" />
+    <NavigationProperty Name="EmployeeLeaveDetails" Relationship="Self.FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_" FromRole="Leave" ToRole="EmployeeLeaveDetail" />
+  </EntityType>
+  <EntityType Name="ListItem">
+    <Key>
+      <PropertyRef Name="ListItemId" />
+    </Key>
+    <Property Name="ListItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ListItemCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="ListItemName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Complains" Relationship="Self.FK_Complain_ListItem_ComplainSeverity_" FromRole="ListItem" ToRole="Complain" />
+    <NavigationProperty Name="Complains1" Relationship="Self.FK_Complain_ListItem_ComplainStatus_" FromRole="ListItem" ToRole="Complain" />
+    <NavigationProperty Name="EmployeeInformations" Relationship="Self.FK_EmployeeInformation_ListItem" FromRole="ListItem" ToRole="EmployeeInformation" />
+    <NavigationProperty Name="EmployeeLeaves" Relationship="Self.FK_EmployeeLeave_ListItem" FromRole="ListItem" ToRole="EmployeeLeave" />
+    <NavigationProperty Name="ListItemCategory" Relationship="Self.FK_ListItem_ListItemCategory" FromRole="ListItem" ToRole="ListItemCategory" />
+    <NavigationProperty Name="Plans" Relationship="Self.FK_Plan_Plan" FromRole="ListItem" ToRole="Plan" />
+    <NavigationProperty Name="PlanDurations" Relationship="Self.FK_PlanDuration_ListItem" FromRole="ListItem" ToRole="PlanDuration" />
+    <NavigationProperty Name="SalaryTransactions" Relationship="Self.FK_SalaryTransaction_ListItem_PaymentMethod_" FromRole="ListItem" ToRole="SalaryTransaction" />
+    <NavigationProperty Name="SalaryTransactions1" Relationship="Self.FK_SalaryTransaction_ListItem_SalaryPaymentType_" FromRole="ListItem" ToRole="SalaryTransaction" />
+    <NavigationProperty Name="SalaryTransactions2" Relationship="Self.FK_SalaryTransaction_ListItem_SalaryStatus_" FromRole="ListItem" ToRole="SalaryTransaction" />
+    <NavigationProperty Name="SystemUserInformations" Relationship="Self.FK_SystemUserInformation_ListItem" FromRole="ListItem" ToRole="SystemUserInformation" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_ListItem_Priority_" FromRole="ListItem" ToRole="Ticket" />
+    <NavigationProperty Name="Tickets1" Relationship="Self.FK_Ticket_ListItem_TicketStatus_" FromRole="ListItem" ToRole="Ticket" />
+    <NavigationProperty Name="UserInformations" Relationship="Self.FK_UserInformation_ListItem" FromRole="ListItem" ToRole="UserInformation" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_ListItem" FromRole="ListItem" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="ListItemCategory">
+    <Key>
+      <PropertyRef Name="ListItemCategoryId" />
+    </Key>
+    <Property Name="ListItemCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ListItemCategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="ListItems" Relationship="Self.FK_ListItem_ListItemCategory" FromRole="ListItemCategory" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="Plan">
+    <Key>
+      <PropertyRef Name="PlanId" />
+    </Key>
+    <Property Name="PlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PlanDurationListItemId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="CompanyLimit" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_Plan_Plan" FromRole="Plan" ToRole="ListItem" />
+    <NavigationProperty Name="Subscriptions" Relationship="Self.FK_Subscription_Plan" FromRole="Plan" ToRole="Subscription" />
+  </EntityType>
+  <EntityType Name="PlanDuration">
+    <Key>
+      <PropertyRef Name="PlanDurationId" />
+    </Key>
+    <Property Name="PlanDurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanDurationListItemId" Type="Int32" Nullable="false" />
+    <Property Name="DurationInMonth" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_PlanDuration_ListItem" FromRole="PlanDuration" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_RoleId_Role_RoleId" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="SalaryRateSetup">
+    <Key>
+      <PropertyRef Name="SalaryRateSetupId" />
+    </Key>
+    <Property Name="SalaryRateSetupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="RateName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="From" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Upto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Rate" Type="Double" Nullable="false" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_SalaryRateSetup_Company" FromRole="SalaryRateSetup" ToRole="Company" />
+    <NavigationProperty Name="User" Relationship="Self.FK_SalaryRateSetup_User" FromRole="SalaryRateSetup" ToRole="User" />
+  </EntityType>
+  <EntityType Name="SalaryTransaction">
+    <Key>
+      <PropertyRef Name="SalaryTransactionId" />
+    </Key>
+    <Property Name="SalaryTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="SalaryPaymentTypeListItemId" Type="Int32" Nullable="false" />
+    <Property Name="PaidFromDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaidUptoDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaymentMethodListItemId" Type="Int32" Nullable="false" />
+    <Property Name="SalaryAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="EmployeeProvidentFundRate" Type="Double" />
+    <Property Name="EmployeeProvidentFundAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CompanyProvidentFundRate" Type="Double" />
+    <Property Name="CompanyProvidentFundAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TaxAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="MiscellenousAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SalaryStatusListItemId" Type="Int32" Nullable="false" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_SalaryTransaction_Employee_EmployeeId_" FromRole="SalaryTransaction" ToRole="Employee" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_SalaryTransaction_ListItem_PaymentMethod_" FromRole="SalaryTransaction" ToRole="ListItem" />
+    <NavigationProperty Name="ListItem1" Relationship="Self.FK_SalaryTransaction_ListItem_SalaryPaymentType_" FromRole="SalaryTransaction" ToRole="ListItem" />
+    <NavigationProperty Name="ListItem2" Relationship="Self.FK_SalaryTransaction_ListItem_SalaryStatus_" FromRole="SalaryTransaction" ToRole="ListItem" />
+    <NavigationProperty Name="User" Relationship="Self.FK_SalaryTransaction_User_InsertUserId_UserId_" FromRole="SalaryTransaction" ToRole="User" />
+  </EntityType>
+  <EntityType Name="SubDomain">
+    <Key>
+      <PropertyRef Name="SubDomainId" />
+    </Key>
+    <Property Name="SubDomainId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientId" Type="Int32" Nullable="false" />
+    <Property Name="SubDomain1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_SubDomain_Client" FromRole="SubDomain" ToRole="Client" />
+    <NavigationProperty Name="User" Relationship="Self.FK_SubDomain_User" FromRole="SubDomain" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientId" Type="Int32" Nullable="false" />
+    <Property Name="PlanId" Type="Int32" Nullable="false" />
+    <Property Name="SubscriptionStartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="SubscriptionEndDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Subscription_ClientId_Client_ClientId" FromRole="Subscription" ToRole="Client" />
+    <NavigationProperty Name="Plan" Relationship="Self.FK_Subscription_Plan" FromRole="Subscription" ToRole="Plan" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SystemUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="SystemUserInformations" Relationship="Self.FK_SystemUserInformation_SystemUser" FromRole="SystemUser" ToRole="SystemUserInformation" />
+    <NavigationProperty Name="SystemUserInformations1" Relationship="Self.FK_SystemUserInformation_SystemUser1" FromRole="SystemUser" ToRole="SystemUserInformation" />
+  </EntityType>
+  <EntityType Name="SystemUserInformation">
+    <Key>
+      <PropertyRef Name="SystemUserInformationId" />
+    </Key>
+    <Property Name="SystemUserInformationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ContactNumber" Type="Int32" Nullable="false" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="PersonalEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GenderListItemId" Type="Int32" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="Binary" MaxLength="50" FixedLength="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_SystemUserInformation_ListItem" FromRole="SystemUserInformation" ToRole="ListItem" />
+    <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemUserInformation_SystemUser" FromRole="SystemUserInformation" ToRole="SystemUser" />
+    <NavigationProperty Name="SystemUser1" Relationship="Self.FK_SystemUserInformation_SystemUser1" FromRole="SystemUserInformation" ToRole="SystemUser" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketId" />
+    </Key>
+    <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PriorityListItemId" Type="Int32" Nullable="false" />
+    <Property Name="TicketStatusListItemId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Ticket_Employee_EmployeeId_" FromRole="Ticket" ToRole="Employee" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_Ticket_ListItem_Priority_" FromRole="Ticket" ToRole="ListItem" />
+    <NavigationProperty Name="ListItem1" Relationship="Self.FK_Ticket_ListItem_TicketStatus_" FromRole="Ticket" ToRole="ListItem" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Company" FromRole="User" ToRole="Attendance" />
+    <NavigationProperty Name="Attendances1" Relationship="Self.FK_Attendance_User" FromRole="User" ToRole="Attendance" />
+    <NavigationProperty Name="Clients" Relationship="Self.FK_Client_UserId_User_UserId" FromRole="User" ToRole="Client" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
+    <NavigationProperty Name="EmployeeLeaves" Relationship="Self.FK_EmployeeLeave_UserId__User_ApprovedUserId_" FromRole="User" ToRole="EmployeeLeave" />
+    <NavigationProperty Name="EmployeeSalaries" Relationship="Self.FK_EmployeeSalary_User" FromRole="User" ToRole="EmployeeSalary" />
+    <NavigationProperty Name="SalaryRateSetups" Relationship="Self.FK_SalaryRateSetup_User" FromRole="User" ToRole="SalaryRateSetup" />
+    <NavigationProperty Name="SalaryTransactions" Relationship="Self.FK_SalaryTransaction_User_InsertUserId_UserId_" FromRole="User" ToRole="SalaryTransaction" />
+    <NavigationProperty Name="SubDomains" Relationship="Self.FK_SubDomain_User" FromRole="User" ToRole="SubDomain" />
+    <NavigationProperty Name="UserInformations" Relationship="Self.FK_UserInformation_User" FromRole="User" ToRole="UserInformation" />
+    <NavigationProperty Name="UserInformations1" Relationship="Self.FK_UserInformation_User1" FromRole="User" ToRole="UserInformation" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_UserID_User_UserId" FromRole="User" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserInformation">
+    <Key>
+      <PropertyRef Name="UserInformationId" />
+    </Key>
+    <Property Name="UserInformationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ContactNumber" Type="Int32" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="PersonalEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GenderListItemId" Type="Int32" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="InsertUserId" Type="Int32" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_UserInformation_ListItem" FromRole="UserInformation" ToRole="ListItem" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserInformation_User" FromRole="UserInformation" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_UserInformation_User1" FromRole="UserInformation" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="UserTypeListItemId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="ListItem" Relationship="Self.FK_UserRole_ListItem" FromRole="UserRole" ToRole="ListItem" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_RoleId_Role_RoleId" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserRole_UserID_User_UserId" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <EntityType Name="VwListItemCategory">
+    <Key>
+      <PropertyRef Name="ListItemCategoryId" />
+      <PropertyRef Name="ListItemId" />
+      <PropertyRef Name="ListItemCategoryName" />
+      <PropertyRef Name="ListItemName" />
+    </Key>
+    <Property Name="ListItemCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="ListItemId" Type="Int32" Nullable="false" />
+    <Property Name="ListItemCategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ListItemName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Attendance_Company">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attendance_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attendance_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_UserId_User_UserId">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_Client_ClientId_ClientId">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubDomain_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="SubDomain" Type="Self.SubDomain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="SubDomain">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subscription_ClientId_Client_ClientId">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="Subscription">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Leave_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Leave" Type="Self.Leave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Leave">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryRateSetup_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="SalaryRateSetup" Type="Self.SalaryRateSetup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="SalaryRateSetup">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Complain_Employee_EmployeeId_">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Complain" Type="Self.Complain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Complain">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Complain_ListItem_ComplainSeverity_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="Complain" Type="Self.Complain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="Complain">
+        <PropertyRef Name="ComplainSeverityListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Complain_ListItem_ComplainStatus_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="Complain" Type="Self.Complain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="Complain">
+        <PropertyRef Name="ComplainStatusListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeInformation_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeInformation" Type="Self.EmployeeInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeInformation">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeLeave" Type="Self.EmployeeLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeLeave">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeLeaveDetail" Type="Self.EmployeeLeaveDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeLeaveDetail">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeSalary_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeSalary" Type="Self.EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryTransaction_Employee_EmployeeId_">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="SalaryTransaction" Type="Self.SalaryTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="SalaryTransaction">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ticket_Employee_EmployeeId_">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeInformation_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="EmployeeInformation" Type="Self.EmployeeInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="EmployeeInformation">
+        <PropertyRef Name="GenderListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeave_LeaveId__Leave_LeaveId_">
+    <End Role="Leave" Type="Self.Leave" Multiplicity="0..1" />
+    <End Role="EmployeeLeave" Type="Self.EmployeeLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leave">
+        <PropertyRef Name="LeaveId" />
+      </Principal>
+      <Dependent Role="EmployeeLeave">
+        <PropertyRef Name="LeaveId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeave_UserId__User_ApprovedUserId_">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="EmployeeLeave" Type="Self.EmployeeLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EmployeeLeave">
+        <PropertyRef Name="ApprovedUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeave_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="EmployeeLeave" Type="Self.EmployeeLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="EmployeeLeave">
+        <PropertyRef Name="LeaveStatusListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_">
+    <End Role="Leave" Type="Self.Leave" Multiplicity="1" />
+    <End Role="EmployeeLeaveDetail" Type="Self.EmployeeLeaveDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leave">
+        <PropertyRef Name="LeaveId" />
+      </Principal>
+      <Dependent Role="EmployeeLeaveDetail">
+        <PropertyRef Name="LeaveId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeSalary_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="EmployeeSalary" Type="Self.EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="InserUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ListItem_ListItemCategory">
+    <End Role="ListItemCategory" Type="Self.ListItemCategory" Multiplicity="1" />
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItemCategory">
+        <PropertyRef Name="ListItemCategoryId" />
+      </Principal>
+      <Dependent Role="ListItem">
+        <PropertyRef Name="ListItemCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Plan_Plan">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="Plan" Type="Self.Plan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="Plan">
+        <PropertyRef Name="PlanDurationListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanDuration_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="PlanDuration" Type="Self.PlanDuration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="PlanDuration">
+        <PropertyRef Name="PlanDurationListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryTransaction_ListItem_PaymentMethod_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="SalaryTransaction" Type="Self.SalaryTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="SalaryTransaction">
+        <PropertyRef Name="PaymentMethodListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryTransaction_ListItem_SalaryPaymentType_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="SalaryTransaction" Type="Self.SalaryTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="SalaryTransaction">
+        <PropertyRef Name="SalaryPaymentTypeListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryTransaction_ListItem_SalaryStatus_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="SalaryTransaction" Type="Self.SalaryTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="SalaryTransaction">
+        <PropertyRef Name="SalaryStatusListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemUserInformation_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="SystemUserInformation" Type="Self.SystemUserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="SystemUserInformation">
+        <PropertyRef Name="GenderListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ticket_ListItem_Priority_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="PriorityListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ticket_ListItem_TicketStatus_">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="TicketStatusListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInformation_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="UserInformation">
+        <PropertyRef Name="GenderListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_ListItem">
+    <End Role="ListItem" Type="Self.ListItem" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListItem">
+        <PropertyRef Name="ListItemId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserTypeListItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subscription_Plan">
+    <End Role="Plan" Type="Self.Plan" Multiplicity="1" />
+    <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plan">
+        <PropertyRef Name="PlanId" />
+      </Principal>
+      <Dependent Role="Subscription">
+        <PropertyRef Name="PlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_RoleId_Role_RoleId">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryRateSetup_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="SalaryRateSetup" Type="Self.SalaryRateSetup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="SalaryRateSetup">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryTransaction_User_InsertUserId_UserId_">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="SalaryTransaction" Type="Self.SalaryTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="SalaryTransaction">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubDomain_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="SubDomain" Type="Self.SubDomain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="SubDomain">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemUserInformation_SystemUser">
+    <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1" />
+    <End Role="SystemUserInformation" Type="Self.SystemUserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="SystemUserInformation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemUserInformation_SystemUser1">
+    <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1" />
+    <End Role="SystemUserInformation" Type="Self.SystemUserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="SystemUserInformation">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInformation_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInformation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInformation_User1">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInformation">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_UserID_User_UserId">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PayrollEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="Complains" EntityType="Self.Complain" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="EmployeeInformations" EntityType="Self.EmployeeInformation" />
+    <EntitySet Name="EmployeeLeaves" EntityType="Self.EmployeeLeave" />
+    <EntitySet Name="EmployeeLeaveDetails" EntityType="Self.EmployeeLeaveDetail" />
+    <EntitySet Name="EmployeeSalaries" EntityType="Self.EmployeeSalary" />
+    <EntitySet Name="Leaves" EntityType="Self.Leave" />
+    <EntitySet Name="ListItems" EntityType="Self.ListItem" />
+    <EntitySet Name="ListItemCategories" EntityType="Self.ListItemCategory" />
+    <EntitySet Name="Plans" EntityType="Self.Plan" />
+    <EntitySet Name="PlanDurations" EntityType="Self.PlanDuration" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="SalaryRateSetups" EntityType="Self.SalaryRateSetup" />
+    <EntitySet Name="SalaryTransactions" EntityType="Self.SalaryTransaction" />
+    <EntitySet Name="SubDomains" EntityType="Self.SubDomain" />
+    <EntitySet Name="Subscriptions" EntityType="Self.Subscription" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="SystemUsers" EntityType="Self.SystemUser" />
+    <EntitySet Name="SystemUserInformations" EntityType="Self.SystemUserInformation" />
+    <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserInformations" EntityType="Self.UserInformation" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="VwListItemCategories" EntityType="Self.VwListItemCategory" />
+    <AssociationSet Name="FK_Attendance_Company" Association="Self.FK_Attendance_Company">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Attendance" EntitySet="Attendances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attendance_Employee" Association="Self.FK_Attendance_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Attendance" EntitySet="Attendances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attendance_User" Association="Self.FK_Attendance_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Attendance" EntitySet="Attendances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_UserId_User_UserId" Association="Self.FK_Client_UserId_User_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_Client_ClientId_ClientId" Association="Self.FK_Company_Client_ClientId_ClientId">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubDomain_Client" Association="Self.FK_SubDomain_Client">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="SubDomain" EntitySet="SubDomains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subscription_ClientId_Client_ClientId" Association="Self.FK_Subscription_ClientId_Client_ClientId">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Subscription" EntitySet="Subscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Company" Association="Self.FK_Employee_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Leave_Company" Association="Self.FK_Leave_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Leave" EntitySet="Leaves" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryRateSetup_Company" Association="Self.FK_SalaryRateSetup_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="SalaryRateSetup" EntitySet="SalaryRateSetups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Complain_Employee_EmployeeId_" Association="Self.FK_Complain_Employee_EmployeeId_">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Complain" EntitySet="Complains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Complain_ListItem_ComplainSeverity_" Association="Self.FK_Complain_ListItem_ComplainSeverity_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="Complain" EntitySet="Complains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Complain_ListItem_ComplainStatus_" Association="Self.FK_Complain_ListItem_ComplainStatus_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="Complain" EntitySet="Complains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeInformation_Employee" Association="Self.FK_EmployeeInformation_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeInformation" EntitySet="EmployeeInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_" Association="Self.FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeLeave" EntitySet="EmployeeLeaves" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_" Association="Self.FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeLeaveDetail" EntitySet="EmployeeLeaveDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeSalary_Employee" Association="Self.FK_EmployeeSalary_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryTransaction_Employee_EmployeeId_" Association="Self.FK_SalaryTransaction_Employee_EmployeeId_">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="SalaryTransaction" EntitySet="SalaryTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ticket_Employee_EmployeeId_" Association="Self.FK_Ticket_Employee_EmployeeId_">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeInformation_ListItem" Association="Self.FK_EmployeeInformation_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="EmployeeInformation" EntitySet="EmployeeInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeave_LeaveId__Leave_LeaveId_" Association="Self.FK_EmployeeLeave_LeaveId__Leave_LeaveId_">
+      <End Role="Leave" EntitySet="Leaves" />
+      <End Role="EmployeeLeave" EntitySet="EmployeeLeaves" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeave_UserId__User_ApprovedUserId_" Association="Self.FK_EmployeeLeave_UserId__User_ApprovedUserId_">
+      <End Role="User" EntitySet="Users" />
+      <End Role="EmployeeLeave" EntitySet="EmployeeLeaves" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeave_ListItem" Association="Self.FK_EmployeeLeave_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="EmployeeLeave" EntitySet="EmployeeLeaves" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_" Association="Self.FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_">
+      <End Role="Leave" EntitySet="Leaves" />
+      <End Role="EmployeeLeaveDetail" EntitySet="EmployeeLeaveDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeSalary_User" Association="Self.FK_EmployeeSalary_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ListItem_ListItemCategory" Association="Self.FK_ListItem_ListItemCategory">
+      <End Role="ListItemCategory" EntitySet="ListItemCategories" />
+      <End Role="ListItem" EntitySet="ListItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Plan_Plan" Association="Self.FK_Plan_Plan">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="Plan" EntitySet="Plans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanDuration_ListItem" Association="Self.FK_PlanDuration_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="PlanDuration" EntitySet="PlanDurations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryTransaction_ListItem_PaymentMethod_" Association="Self.FK_SalaryTransaction_ListItem_PaymentMethod_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="SalaryTransaction" EntitySet="SalaryTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryTransaction_ListItem_SalaryPaymentType_" Association="Self.FK_SalaryTransaction_ListItem_SalaryPaymentType_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="SalaryTransaction" EntitySet="SalaryTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryTransaction_ListItem_SalaryStatus_" Association="Self.FK_SalaryTransaction_ListItem_SalaryStatus_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="SalaryTransaction" EntitySet="SalaryTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemUserInformation_ListItem" Association="Self.FK_SystemUserInformation_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="SystemUserInformation" EntitySet="SystemUserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ticket_ListItem_Priority_" Association="Self.FK_Ticket_ListItem_Priority_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ticket_ListItem_TicketStatus_" Association="Self.FK_Ticket_ListItem_TicketStatus_">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInformation_ListItem" Association="Self.FK_UserInformation_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="UserInformation" EntitySet="UserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_ListItem" Association="Self.FK_UserRole_ListItem">
+      <End Role="ListItem" EntitySet="ListItems" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subscription_Plan" Association="Self.FK_Subscription_Plan">
+      <End Role="Plan" EntitySet="Plans" />
+      <End Role="Subscription" EntitySet="Subscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_RoleId_Role_RoleId" Association="Self.FK_UserRole_RoleId_Role_RoleId">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryRateSetup_User" Association="Self.FK_SalaryRateSetup_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SalaryRateSetup" EntitySet="SalaryRateSetups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryTransaction_User_InsertUserId_UserId_" Association="Self.FK_SalaryTransaction_User_InsertUserId_UserId_">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SalaryTransaction" EntitySet="SalaryTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubDomain_User" Association="Self.FK_SubDomain_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SubDomain" EntitySet="SubDomains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemUserInformation_SystemUser" Association="Self.FK_SystemUserInformation_SystemUser">
+      <End Role="SystemUser" EntitySet="SystemUsers" />
+      <End Role="SystemUserInformation" EntitySet="SystemUserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemUserInformation_SystemUser1" Association="Self.FK_SystemUserInformation_SystemUser1">
+      <End Role="SystemUser" EntitySet="SystemUsers" />
+      <End Role="SystemUserInformation" EntitySet="SystemUserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInformation_User" Association="Self.FK_UserInformation_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserInformation" EntitySet="UserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInformation_User1" Association="Self.FK_UserInformation_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserInformation" EntitySet="UserInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_UserID_User_UserId" Association="Self.FK_UserRole_UserID_User_UserId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(PayrollModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(PayrollModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="SpClientUserIns">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="UserModel" Mode="In" Type="String" />
+      <Parameter Name="UserInformationModel" Mode="In" Type="String" />
+      <Parameter Name="InsertUserId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpCompanyIns">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="CompanyName" Mode="In" Type="String" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpCompanySel" ReturnType="Collection(String)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeAttendenceIns">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+      <Parameter Name="IsPresent" Mode="In" Type="Boolean" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeAttendenceLogoutIns">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="AttendanceId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeAttendenceSel" ReturnType="Collection(String)">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeIns">
+      <Parameter Name="EmployeeModel" Mode="In" Type="String" />
+      <Parameter Name="EmployeeInformation" Mode="In" Type="String" />
+      <Parameter Name="EmployeeSalary" Mode="In" Type="String" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeLeaveAppliedIns">
+      <Parameter Name="EmployeeLeaveModel" Mode="In" Type="String" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeLeaveAppliedSel" ReturnType="Collection(String)">
+      <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeLeaveSel" ReturnType="Collection(String)">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeleaveStatusTsk">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="EmployeeLeaveId" Mode="In" Type="Int32" />
+      <Parameter Name="InsertUserId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeSalartTransactionSel" ReturnType="Collection(String)">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpEmployeeSel" ReturnType="Collection(String)">
+      <Parameter Name="ClientId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpLeaveDel">
+      <Parameter Name="LeaveId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpLeaveIns">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="LeaveName" Mode="In" Type="String" />
+      <Parameter Name="Days" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpLeaveSel" ReturnType="Collection(String)">
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpLeaveUpdate">
+      <Parameter Name="LeaveId" Mode="In" Type="Int32" />
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="LeaveName" Mode="In" Type="String" />
+      <Parameter Name="Days" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpListItemCategoryDetailSel" ReturnType="Collection(String)">
+      <Parameter Name="ListItemCategoryName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpPlanSel" ReturnType="Collection(String)" />
+    <FunctionImport Name="SpSalaryRateSel" ReturnType="Collection(String)">
+      <Parameter Name="ClientId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpSalaryRateSetupIns">
+      <Parameter Name="SalaryRateSetupId" Mode="In" Type="Int32" />
+      <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+      <Parameter Name="RateName" Mode="In" Type="String" />
+      <Parameter Name="From" Mode="In" Type="Int32" />
+      <Parameter Name="Upto" Mode="In" Type="Int32" />
+      <Parameter Name="Rate" Mode="In" Type="Double" />
+      <Parameter Name="InsertUserId" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpUserIns">
+      <Parameter Name="UserModel" Mode="In" Type="String" />
+      <Parameter Name="UserInformationModel" Mode="In" Type="String" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpUserRoleSel" ReturnType="Collection(PayrollModel.SpUserRoleSel_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpUserSel" ReturnType="Collection(String)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpVerifyUserSel" ReturnType="Collection(PayrollModel.SpVerifyUserSel_Result)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpVerifyEmployeeSel" ReturnType="Collection(PayrollModel.SpVerifyEmployeeSel_Result)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SpUserRoleSel_Result">
+    <Property Type="String" Name="RoleName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="RoleDescription" Nullable="false" MaxLength="300" />
+  </ComplexType>
+  <ComplexType Name="SpVerifyUserSel_Result">
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="FullName" Nullable="false" MaxLength="201" />
+    <Property Type="String" Name="Password" Nullable="false" />
+    <Property Type="Int32" Name="ParentId" Nullable="false" />
+    <Property Type="Int32" Name="ClientId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SpVerifyEmployeeSel_Result">
+    <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+    <Property Type="Int32" Name="UserId" Nullable="true" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="FullName" Nullable="false" MaxLength="201" />
+    <Property Type="String" Name="Passsword" Nullable="false" />
+    <Property Type="Int32" Name="CompanyId" Nullable="false" />
+    <Property Type="Int32" Name="ClientId" Nullable="true" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{61B3C51D-9F74-4729-9653-5D93AB084DC2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BusinessEntities</RootNamespace>
+    <AssemblyName>BusinessEntities</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attendance.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Company.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Complain.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeInformation.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeLeave.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeLeaveDetail.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeSalary.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Leave.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListItem.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListItemCategory.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PayrollEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PayrollEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Plan.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanDuration.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaryRateSetup.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaryTransaction.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpUserRoleSel_Result.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpVerifyEmployeeSel_Result.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpVerifyUserSel_Result.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubDomain.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subscription.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemUser.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemUserInformation.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ticket.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInformation.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VwListItemCategory.cs">
+      <DependentUpon>PayrollEntities.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="PayrollEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PayrollEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="PayrollEntities.edmx.diagram">
+      <DependentUpon>PayrollEntities.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PayrollEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PayrollEntities.edmx</DependentUpon>
+      <LastGenOutput>PayrollEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="PayrollEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PayrollEntities.edmx</DependentUpon>
+      <LastGenOutput>PayrollEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

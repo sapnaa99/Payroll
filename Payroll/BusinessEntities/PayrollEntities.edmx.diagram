@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="97c7cef27a1043c1b5d56f453c3bc766" Name="Diagram1">
+        <EntityTypeShape EntityType="PayrollModel.Attendance" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Client" Width="1.5" PointX="1.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Company" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Complain" Width="1.5" PointX="5.25" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Employee" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.EmployeeInformation" Width="1.5" PointX="8.25" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.EmployeeLeave" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.EmployeeLeaveDetail" Width="1.5" PointX="11.25" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.EmployeeSalary" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Leave" Width="1.5" PointX="3" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.ListItem" Width="1.5" PointX="3" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.ListItemCategory" Width="1.5" PointX="0.75" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Plan" Width="1.5" PointX="5.25" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.PlanDuration" Width="1.5" PointX="5.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Role" Width="1.5" PointX="9" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.SalaryRateSetup" Width="1.5" PointX="7.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.SalaryTransaction" Width="1.5" PointX="5.25" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.SubDomain" Width="1.5" PointX="3.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Subscription" Width="1.5" PointX="7.5" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.sysdiagram" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.SystemUser" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.SystemUserInformation" Width="1.5" PointX="8.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Ticket" Width="1.5" PointX="8.25" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.User" Width="1.5" PointX="1.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.UserInformation" Width="1.5" PointX="11.25" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.UserRole" Width="1.5" PointX="11.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.VwListItemCategory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PayrollModel.FK_Attendance_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Attendance_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Attendance_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Client_UserId_User_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Company_Client_ClientId_ClientId" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SubDomain_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Subscription_ClientId_Client_ClientId" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Employee_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Leave_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryRateSetup_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Complain_Employee_EmployeeId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Complain_ListItem_ComplainSeverity_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Complain_ListItem_ComplainStatus_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Employee_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeInformation_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeave_EmployeeId__Employee_EmployeeId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeaveDetail_EmployeeId__Employee_EmployeeId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeSalary_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryTransaction_Employee_EmployeeId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Ticket_Employee_EmployeeId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeInformation_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeave_LeaveId__Leave_LeaveId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeave_UserId__User_ApprovedUserId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeave_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeLeaveDetail_LeaveId__Leave_LeaveId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_EmployeeSalary_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_ListItem_ListItemCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Plan_Plan" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_PlanDuration_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryTransaction_ListItem_PaymentMethod_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryTransaction_ListItem_SalaryPaymentType_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryTransaction_ListItem_SalaryStatus_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SystemUserInformation_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Ticket_ListItem_Priority_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Ticket_ListItem_TicketStatus_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserInformation_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserRole_ListItem" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_Subscription_Plan" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserRole_RoleId_Role_RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryRateSetup_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SalaryTransaction_User_InsertUserId_UserId_" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SubDomain_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SystemUserInformation_SystemUser" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_SystemUserInformation_SystemUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserInformation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserInformation_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollModel.FK_UserRole_UserID_User_UserId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

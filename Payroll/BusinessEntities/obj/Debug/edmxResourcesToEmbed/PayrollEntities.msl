@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PayrollModelStoreContainer" CdmEntityContainer="PayrollEntities">
+    <EntitySetMapping Name="Attendances">
+      <EntityTypeMapping TypeName="PayrollModel.Attendance">
+        <MappingFragment StoreEntitySet="Attendance">
+          <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="InTime" ColumnName="InTime" />
+          <ScalarProperty Name="OutTime" ColumnName="OutTime" />
+          <ScalarProperty Name="IsPresent" ColumnName="IsPresent" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="PayrollModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="PayrollModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="InsertUserID" ColumnName="InsertUserID" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Complains">
+      <EntityTypeMapping TypeName="PayrollModel.Complain">
+        <MappingFragment StoreEntitySet="Complain">
+          <ScalarProperty Name="ComplainId" ColumnName="ComplainId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ComplainSeverityListItemId" ColumnName="ComplainSeverityListItemId" />
+          <ScalarProperty Name="ConsultManagement" ColumnName="ConsultManagement" />
+          <ScalarProperty Name="ComplainStatusListItemId" ColumnName="ComplainStatusListItemId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="PayrollModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="MName" ColumnName="MName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Passsword" ColumnName="Passsword" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeInformations">
+      <EntityTypeMapping TypeName="PayrollModel.EmployeeInformation">
+        <MappingFragment StoreEntitySet="EmployeeInformation">
+          <ScalarProperty Name="EmployeeInformationId" ColumnName="EmployeeInformationId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
+          <ScalarProperty Name="GenderListItemId" ColumnName="GenderListItemId" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeLeaves">
+      <EntityTypeMapping TypeName="PayrollModel.EmployeeLeave">
+        <MappingFragment StoreEntitySet="EmployeeLeave">
+          <ScalarProperty Name="EmployeeLeaveId" ColumnName="EmployeeLeaveId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="LeaveId" ColumnName="LeaveId" />
+          <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="LeaveStatusListItemId" ColumnName="LeaveStatusListItemId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="ApprovedUserId" ColumnName="ApprovedUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeLeaveDetails">
+      <EntityTypeMapping TypeName="PayrollModel.EmployeeLeaveDetail">
+        <MappingFragment StoreEntitySet="EmployeeLeaveDetail">
+          <ScalarProperty Name="EmployeeLeaveDetailId" ColumnName="EmployeeLeaveDetailId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="LeaveId" ColumnName="LeaveId" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeSalaries">
+      <EntityTypeMapping TypeName="PayrollModel.EmployeeSalary">
+        <MappingFragment StoreEntitySet="EmployeeSalary">
+          <ScalarProperty Name="EmployeeSalaryId" ColumnName="EmployeeSalaryId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+          <ScalarProperty Name="Allowance" ColumnName="Allowance" />
+          <ScalarProperty Name="InserUserId" ColumnName="InserUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Leaves">
+      <EntityTypeMapping TypeName="PayrollModel.Leave">
+        <MappingFragment StoreEntitySet="Leave">
+          <ScalarProperty Name="LeaveId" ColumnName="LeaveId" />
+          <ScalarProperty Name="LeaveName" ColumnName="LeaveName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListItems">
+      <EntityTypeMapping TypeName="PayrollModel.ListItem">
+        <MappingFragment StoreEntitySet="ListItem">
+          <ScalarProperty Name="ListItemId" ColumnName="ListItemId" />
+          <ScalarProperty Name="ListItemCategoryId" ColumnName="ListItemCategoryId" />
+          <ScalarProperty Name="ListItemName" ColumnName="ListItemName" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListItemCategories">
+      <EntityTypeMapping TypeName="PayrollModel.ListItemCategory">
+        <MappingFragment StoreEntitySet="ListItemCategory">
+          <ScalarProperty Name="ListItemCategoryId" ColumnName="ListItemCategoryId" />
+          <ScalarProperty Name="ListItemCategoryName" ColumnName="ListItemCategoryName" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Plans">
+      <EntityTypeMapping TypeName="PayrollModel.Plan">
+        <MappingFragment StoreEntitySet="Plan">
+          <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PlanDurationListItemId" ColumnName="PlanDurationListItemId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="CompanyLimit" ColumnName="CompanyLimit" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlanDurations">
+      <EntityTypeMapping TypeName="PayrollModel.PlanDuration">
+        <MappingFragment StoreEntitySet="PlanDuration">
+          <ScalarProperty Name="PlanDurationId" ColumnName="PlanDurationId" />
+          <ScalarProperty Name="PlanDurationListItemId" ColumnName="PlanDurationListItemId" />
+          <ScalarProperty Name="DurationInMonth" ColumnName="DurationInMonth" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="PayrollModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalaryRateSetups">
+      <EntityTypeMapping TypeName="PayrollModel.SalaryRateSetup">
+        <MappingFragment StoreEntitySet="SalaryRateSetup">
+          <ScalarProperty Name="SalaryRateSetupId" ColumnName="SalaryRateSetupId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="RateName" ColumnName="RateName" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="Upto" ColumnName="Upto" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalaryTransactions">
+      <EntityTypeMapping TypeName="PayrollModel.SalaryTransaction">
+        <MappingFragment StoreEntitySet="SalaryTransaction">
+          <ScalarProperty Name="SalaryTransactionId" ColumnName="SalaryTransactionId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="SalaryPaymentTypeListItemId" ColumnName="SalaryPaymentTypeListItemId" />
+          <ScalarProperty Name="PaidFromDate" ColumnName="PaidFromDate" />
+          <ScalarProperty Name="PaidUptoDate" ColumnName="PaidUptoDate" />
+          <ScalarProperty Name="PaymentMethodListItemId" ColumnName="PaymentMethodListItemId" />
+          <ScalarProperty Name="SalaryAmount" ColumnName="SalaryAmount" />
+          <ScalarProperty Name="EmployeeProvidentFundRate" ColumnName="EmployeeProvidentFundRate" />
+          <ScalarProperty Name="EmployeeProvidentFundAmount" ColumnName="EmployeeProvidentFundAmount" />
+          <ScalarProperty Name="CompanyProvidentFundRate" ColumnName="CompanyProvidentFundRate" />
+          <ScalarProperty Name="CompanyProvidentFundAmount" ColumnName="CompanyProvidentFundAmount" />
+          <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+          <ScalarProperty Name="MiscellenousAmount" ColumnName="MiscellenousAmount" />
+          <ScalarProperty Name="SalaryStatusListItemId" ColumnName="SalaryStatusListItemId" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubDomains">
+      <EntityTypeMapping TypeName="PayrollModel.SubDomain">
+        <MappingFragment StoreEntitySet="SubDomain">
+          <ScalarProperty Name="SubDomainId" ColumnName="SubDomainId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="SubDomain1" ColumnName="SubDomain" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subscriptions">
+      <EntityTypeMapping TypeName="PayrollModel.Subscription">
+        <MappingFragment StoreEntitySet="Subscription">
+          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+          <ScalarProperty Name="SubscriptionStartDate" ColumnName="SubscriptionStartDate" />
+          <ScalarProperty Name="SubscriptionEndDate" ColumnName="SubscriptionEndDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PayrollModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemUsers">
+      <EntityTypeMapping TypeName="PayrollModel.SystemUser">
+        <MappingFragment StoreEntitySet="SystemUser">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="MName" ColumnName="MName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemUserInformations">
+      <EntityTypeMapping TypeName="PayrollModel.SystemUserInformation">
+        <MappingFragment StoreEntitySet="SystemUserInformation">
+          <ScalarProperty Name="SystemUserInformationId" ColumnName="SystemUserInformationId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
+          <ScalarProperty Name="GenderListItemId" ColumnName="GenderListItemId" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tickets">
+      <EntityTypeMapping TypeName="PayrollModel.Ticket">
+        <MappingFragment StoreEntitySet="Ticket">
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PriorityListItemId" ColumnName="PriorityListItemId" />
+          <ScalarProperty Name="TicketStatusListItemId" ColumnName="TicketStatusListItemId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PayrollModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="MName" ColumnName="MName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInformations">
+      <EntityTypeMapping TypeName="PayrollModel.UserInformation">
+        <MappingFragment StoreEntitySet="UserInformation">
+          <ScalarProperty Name="UserInformationId" ColumnName="UserInformationId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
+          <ScalarProperty Name="GenderListItemId" ColumnName="GenderListItemId" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+          <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="PayrollModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserTypeListItemId" ColumnName="UserTypeListItemId" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VwListItemCategories">
+      <EntityTypeMapping TypeName="PayrollModel.VwListItemCategory">
+        <MappingFragment StoreEntitySet="VwListItemCategory">
+          <ScalarProperty Name="ListItemCategoryId" ColumnName="ListItemCategoryId" />
+          <ScalarProperty Name="ListItemId" ColumnName="ListItemId" />
+          <ScalarProperty Name="ListItemCategoryName" ColumnName="ListItemCategoryName" />
+          <ScalarProperty Name="ListItemName" ColumnName="ListItemName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PayrollModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PayrollModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PayrollModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PayrollModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PayrollModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PayrollModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PayrollModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PayrollModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PayrollModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="SpClientUserIns" FunctionName="PayrollModel.Store.SpClientUserIns" />
+    <FunctionImportMapping FunctionImportName="SpCompanyIns" FunctionName="PayrollModel.Store.SpCompanyIns" />
+    <FunctionImportMapping FunctionImportName="SpCompanySel" FunctionName="PayrollModel.Store.SpCompanySel" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeAttendenceIns" FunctionName="PayrollModel.Store.SpEmployeeAttendenceIns" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeAttendenceLogoutIns" FunctionName="PayrollModel.Store.SpEmployeeAttendenceLogoutIns" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeAttendenceSel" FunctionName="PayrollModel.Store.SpEmployeeAttendenceSel" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeIns" FunctionName="PayrollModel.Store.SpEmployeeIns" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeLeaveAppliedIns" FunctionName="PayrollModel.Store.SpEmployeeLeaveAppliedIns" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeLeaveAppliedSel" FunctionName="PayrollModel.Store.SpEmployeeLeaveAppliedSel" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeLeaveSel" FunctionName="PayrollModel.Store.SpEmployeeLeaveSel" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeleaveStatusTsk" FunctionName="PayrollModel.Store.SpEmployeeleaveStatusTsk" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeSalartTransactionSel" FunctionName="PayrollModel.Store.SpEmployeeSalartTransactionSel" />
+    <FunctionImportMapping FunctionImportName="SpEmployeeSel" FunctionName="PayrollModel.Store.SpEmployeeSel" />
+    <FunctionImportMapping FunctionImportName="SpLeaveDel" FunctionName="PayrollModel.Store.SpLeaveDel" />
+    <FunctionImportMapping FunctionImportName="SpLeaveIns" FunctionName="PayrollModel.Store.SpLeaveIns" />
+    <FunctionImportMapping FunctionImportName="SpLeaveSel" FunctionName="PayrollModel.Store.SpLeaveSel" />
+    <FunctionImportMapping FunctionImportName="SpLeaveUpdate" FunctionName="PayrollModel.Store.SpLeaveUpdate" />
+    <FunctionImportMapping FunctionImportName="SpListItemCategoryDetailSel" FunctionName="PayrollModel.Store.SpListItemCategoryDetailSel" />
+    <FunctionImportMapping FunctionImportName="SpPlanSel" FunctionName="PayrollModel.Store.SpPlanSel" />
+    <FunctionImportMapping FunctionImportName="SpSalaryRateSel" FunctionName="PayrollModel.Store.SpSalaryRateSel" />
+    <FunctionImportMapping FunctionImportName="SpSalaryRateSetupIns" FunctionName="PayrollModel.Store.SpSalaryRateSetupIns" />
+    <FunctionImportMapping FunctionImportName="SpUserIns" FunctionName="PayrollModel.Store.SpUserIns" />
+    <FunctionImportMapping FunctionImportName="SpUserRoleSel" FunctionName="PayrollModel.Store.SpUserRoleSel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PayrollModel.SpUserRoleSel_Result">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpUserSel" FunctionName="PayrollModel.Store.SpUserSel" />
+    <FunctionImportMapping FunctionImportName="SpVerifyUserSel" FunctionName="PayrollModel.Store.SpVerifyUserSel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PayrollModel.SpVerifyUserSel_Result">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpVerifyEmployeeSel" FunctionName="PayrollModel.Store.SpVerifyEmployeeSel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PayrollModel.SpVerifyEmployeeSel_Result">
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Passsword" ColumnName="Passsword" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
