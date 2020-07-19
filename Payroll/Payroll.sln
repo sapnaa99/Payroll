@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroll", "Payroll\Payroll.csproj", "{4797090A-CCCF-4B10-B556-F3DA91FB2C4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{AD652FFE-EB10-4A79-A19A-93B1577E9B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntities", "BusinessEntities\BusinessEntities.csproj", "{61B3C51D-9F74-4729-9653-5D93AB084DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{B393141D-98CF-4949-9F99-2B8B1B774CF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4797090A-CCCF-4B10-B556-F3DA91FB2C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4797090A-CCCF-4B10-B556-F3DA91FB2C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4797090A-CCCF-4B10-B556-F3DA91FB2C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4797090A-CCCF-4B10-B556-F3DA91FB2C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD652FFE-EB10-4A79-A19A-93B1577E9B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD652FFE-EB10-4A79-A19A-93B1577E9B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD652FFE-EB10-4A79-A19A-93B1577E9B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD652FFE-EB10-4A79-A19A-93B1577E9B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B3C51D-9F74-4729-9653-5D93AB084DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B3C51D-9F74-4729-9653-5D93AB084DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B3C51D-9F74-4729-9653-5D93AB084DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B3C51D-9F74-4729-9653-5D93AB084DC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B393141D-98CF-4949-9F99-2B8B1B774CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B393141D-98CF-4949-9F99-2B8B1B774CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B393141D-98CF-4949-9F99-2B8B1B774CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B393141D-98CF-4949-9F99-2B8B1B774CF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E87DB3CE-B3FE-410F-B744-873D9DAF4BA6}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://sapanachaudhary.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BusinessEntities\\BusinessEntities.csproj
+		SccProjectName1 = BusinessEntities
+		SccLocalPath1 = BusinessEntities
+		SccProjectUniqueName2 = BusinessLayer\\BusinessLayer.csproj
+		SccProjectName2 = BusinessLayer
+		SccLocalPath2 = BusinessLayer
+		SccProjectUniqueName3 = Model\\Model.csproj
+		SccProjectName3 = Model
+		SccLocalPath3 = Model
+		SccProjectUniqueName4 = Payroll\\Payroll.csproj
+		SccProjectName4 = Payroll
+		SccLocalPath4 = Payroll
+	EndGlobalSection
+EndGlobal
