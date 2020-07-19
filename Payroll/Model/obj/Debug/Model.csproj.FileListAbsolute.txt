@@ -1,0 +1,9 @@
+D:\PersonalP\Payroll\Payroll\Model\bin\Debug\Model.dll.config
+D:\PersonalP\Payroll\Payroll\Model\bin\Debug\Model.dll
+D:\PersonalP\Payroll\Payroll\Model\bin\Debug\Model.pdb
+D:\PersonalP\Payroll\Payroll\Model\bin\Debug\EntityFramework.dll
+D:\PersonalP\Payroll\Payroll\Model\bin\Debug\EntityFramework.xml
+D:\PersonalP\Payroll\Payroll\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+D:\PersonalP\Payroll\Payroll\Model\obj\Debug\Model.dll
+D:\PersonalP\Payroll\Payroll\Model\obj\Debug\Model.pdb
+D:\PersonalP\Payroll\Payroll\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
